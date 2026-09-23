@@ -1,0 +1,1816 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موی کلوپ | کلوب فیلم‌های عجیب</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Tahoma,sans-serif}
+
+:root{
+  --turquoise:#2dd4bf;
+  --turquoise-soft:#5eead4;
+  --purple:#a78bfa;
+  --purple-soft:#c4b5fd;
+  --bg:#0b1220;
+  --surface:#131c2e;
+  --surface-2:#1a2438;
+  --border:rgba(45,212,191,.18);
+  --text:#dbe4f0;
+  --text-strong:#eef4fb;
+  --muted:#8b98ad;
+  --grad:linear-gradient(135deg,#14b8a6,#7c3aed);
+  --grad-soft:linear-gradient(135deg,#2dd4bf,#a78bfa);
+}
+
+html,body{background:var(--bg)}
+body{
+  background:
+    radial-gradient(circle at 0% 0%,rgba(45,212,191,.10),transparent 45%),
+    radial-gradient(circle at 100% 15%,rgba(124,58,237,.14),transparent 50%),
+    var(--bg);
+  color:var(--text);
+  padding-bottom:80px;
+  min-height:100vh;
+}
+
+header{
+  background:rgba(11,18,32,.92);
+  backdrop-filter:blur(10px);
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+  border-bottom:1px solid var(--border);
+  z-index:10;
+  box-shadow:0 2px 14px rgba(0,0,0,.4);
+}
+.logo{
+  font-weight:bold;
+  font-size:16px;
+  background:var(--grad-soft);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  cursor:pointer;
+}
+.search{
+  flex:1;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:8px 12px;
+  color:var(--muted);
+  font-size:12px;
+  outline:none;
+}
+.search::placeholder{color:var(--muted)}
+.login{
+  background:var(--grad);
+  color:#eef4fb;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  box-shadow:0 2px 10px rgba(124,58,237,.35);
+  cursor:pointer;
+}
+
+nav.top-nav{
+  background:rgba(11,18,32,.85);
+  padding:10px 14px;
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  font-size:13px;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+  scrollbar-width:none;
+}
+nav.top-nav::-webkit-scrollbar{display:none}
+nav.top-nav span{
+  white-space:nowrap;
+  padding-bottom:4px;
+  cursor:pointer;
+  transition:.2s;
+}
+nav.top-nav span.active{
+  background:var(--grad-soft);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  font-weight:bold;
+  border-bottom:2px solid var(--turquoise);
+}
+nav.top-nav span.admin-link{
+  color:#a78bfa;
+  font-weight:bold;
+}
+
+.page{display:none;animation:fade .3s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.hero{
+  margin:14px;
+  border-radius:18px;
+  padding:26px 20px;
+  background:
+    linear-gradient(135deg,rgba(20,184,166,.35),rgba(76,29,149,.55)),
+    #0f172a;
+  border:1px solid var(--border);
+  color:#eef4fb;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;top:-40px;left:-40px;
+  width:180px;height:180px;
+  background:radial-gradient(circle,rgba(45,212,191,.28),transparent 70%);
+  border-radius:50%;
+}
+.hero::after{
+  content:"";
+  position:absolute;bottom:-60px;right:-60px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(167,139,250,.22),transparent 70%);
+  border-radius:50%;
+}
+.hero-badge{
+  background:rgba(45,212,191,.12);
+  color:var(--turquoise-soft);
+  padding:5px 12px;
+  border-radius:12px;
+  font-size:11px;
+  display:inline-block;
+  margin-bottom:12px;
+  border:1px solid rgba(45,212,191,.35);
+  position:relative;z-index:1;
+}
+.hero h1{
+  font-size:24px;margin-bottom:8px;
+  color:var(--text-strong);
+  position:relative;z-index:1;
+}
+.hero p{
+  color:#b8c4d6;font-size:12px;margin-bottom:4px;
+  position:relative;z-index:1;
+}
+.hero-tag{
+  display:inline-block;
+  background:rgba(167,139,250,.12);
+  padding:3px 10px;
+  border-radius:8px;
+  font-size:11px;
+  margin:2px 2px 0 0;
+  color:var(--purple-soft);
+  border:1px solid rgba(167,139,250,.3);
+}
+.hero-btns{display:flex;gap:8px;margin-top:16px;position:relative;z-index:1}
+
+.btn{
+  padding:11px 20px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:bold;
+  border:none;
+  cursor:pointer;
+  font-family:Tahoma,sans-serif;
+}
+.btn-play{
+  background:var(--grad);
+  color:#eef4fb;
+  box-shadow:0 4px 16px rgba(20,184,166,.35);
+}
+.btn-list{
+  background:rgba(45,212,191,.08);
+  color:var(--turquoise-soft);
+  border:1px solid rgba(45,212,191,.35);
+}
+.btn-small{padding:8px 14px;font-size:12px}
+
+.section{padding:0 14px;margin-bottom:24px}
+.section-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
+}
+.section-head h2{
+  font-size:16px;color:var(--text-strong);
+  display:flex;align-items:center;gap:8px;
+}
+.section-head h2::before{
+  content:"";
+  width:4px;height:16px;border-radius:4px;
+  background:var(--grad-soft);
+  display:inline-block;
+}
+.section-head a{
+  color:var(--purple-soft);
+  font-size:12px;font-weight:bold;
+  cursor:pointer;
+}
+
+.row{
+  display:flex;gap:10px;
+  overflow-x:auto;
+  padding-bottom:8px;
+  scrollbar-width:none;
+}
+.row::-webkit-scrollbar{display:none}
+
+.card{
+  min-width:140px;
+  background:var(--surface);
+  border-radius:12px;
+  overflow:hidden;
+  flex-shrink:0;
+  box-shadow:0 3px 16px rgba(0,0,0,.5);
+  border:1px solid var(--border);
+  position:relative;
+  transition:.25s;
+  cursor:pointer;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(45,212,191,.5);
+  box-shadow:0 10px 26px rgba(20,184,166,.18),0 0 0 1px rgba(167,139,250,.25);
+}
+.card img{
+  width:100%;height:200px;
+  object-fit:cover;display:block;
+  background:linear-gradient(160deg,#1a2438,#0f172a);
+  filter:contrast(1.02) saturate(.9) brightness(.92);
+  transition:.3s;
+}
+.card:hover img{
+  filter:contrast(1.05) saturate(1) brightness(1);
+}
+.card-info{padding:8px}
+.card-info b{
+  font-size:12px;display:block;margin-bottom:4px;
+  color:var(--text-strong);line-height:1.3;
+}
+.card-info small{
+  color:var(--turquoise);
+  font-size:11px;font-weight:bold;
+}
+.card-badge{
+  position:absolute;top:6px;right:6px;
+  background:rgba(20,184,166,.85);
+  color:#eef4fb;
+  font-size:9px;padding:3px 7px;
+  border-radius:8px;font-weight:bold;
+  backdrop-filter:blur(4px);z-index:2;
+}
+.card-progress{
+  position:absolute;bottom:0;left:0;right:0;
+  height:4px;background:rgba(255,255,255,.1);
+}
+.card-progress span{
+  display:block;height:100%;
+  background:var(--grad-soft);
+}
+
+.quote{
+  background:var(--surface);
+  padding:14px 16px;border-radius:12px;
+  margin-bottom:10px;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
+  border:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.quote::before{
+  content:"";
+  position:absolute;top:0;right:0;bottom:0;
+  width:4px;background:var(--grad-soft);
+}
+.quote p{
+  font-size:13px;color:#c2cbdb;
+  line-height:1.7;margin-bottom:6px;
+}
+.quote .user{color:var(--turquoise);font-size:11px;font-weight:bold}
+.quote .film{font-size:10px;color:var(--muted)}
+
+.genres{display:flex;flex-wrap:wrap;gap:8px}
+.genre{
+  background:var(--surface);
+  border:1.5px solid rgba(45,212,191,.45);
+  color:var(--turquoise-soft);
+  padding:8px 16px;
+  border-radius:18px;
+  font-size:12px;font-weight:bold;
+  cursor:pointer;transition:.2s;
+}
+.genre:nth-child(even){
+  border-color:rgba(167,139,250,.45);
+  color:var(--purple-soft);
+}
+.genre:hover{
+  background:var(--grad);
+  color:#eef4fb;
+  border-color:transparent;
+}
+
+.profile-head{
+  margin:14px;
+  border-radius:18px;
+  padding:24px 20px;
+  background:
+    linear-gradient(135deg,rgba(20,184,166,.35),rgba(76,29,149,.55)),
+    #0f172a;
+  border:1px solid var(--border);
+  text-align:center;
+}
+.avatar{
+  width:82px;height:82px;border-radius:50%;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:38px;margin:0 auto 12px;
+  border:3px solid rgba(45,212,191,.4);
+  box-shadow:0 6px 24px rgba(20,184,166,.3);
+}
+.profile-head h2{font-size:18px;color:var(--text-strong);margin-bottom:4px}
+.profile-head .username{font-size:12px;color:var(--purple-soft);margin-bottom:8px}
+.profile-head .bio{
+  font-size:12px;color:#b8c4d6;line-height:1.7;
+  max-width:340px;margin:0 auto;
+}
+.profile-btns{display:flex;gap:8px;justify-content:center;margin-top:16px}
+
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;padding:0 14px;margin-bottom:24px;
+}
+.stat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 8px;text-align:center;
+}
+.stat b{
+  display:block;font-size:20px;
+  background:var(--grad-soft);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;margin-bottom:4px;
+}
+.stat span{font-size:11px;color:var(--muted)}
+
+.menu-list{padding:0;margin-bottom:24px}
+.menu-item{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:.2s;
+}
+.menu-item:hover{
+  border-color:rgba(45,212,191,.5);
+  background:var(--surface-2);
+}
+.menu-item .right{
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;color:var(--text-strong);
+}
+.menu-item .right .icon{
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(45,212,191,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+}
+.menu-item .arrow{color:var(--muted);font-size:14px}
+.menu-item .value{color:var(--purple-soft);font-size:12px}
+
+.menu-item.admin-access{
+  background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(45,212,191,.1));
+  border:1.5px solid rgba(167,139,250,.5);
+}
+.menu-item.admin-access .right .icon{
+  background:var(--grad);
+  color:#fff;
+}
+
+.watch-player{
+  margin:14px;
+  border-radius:14px;
+  aspect-ratio:16/9;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at center,rgba(20,184,166,.15),transparent 60%),
+    #050810;
+}
+.watch-player .play-icon{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;color:#fff;
+  cursor:pointer;
+  box-shadow:0 8px 30px rgba(20,184,166,.4);
+  transition:.25s;
+}
+.watch-player .play-icon:hover{
+  transform:scale(1.1);
+}
+.watch-controls{
+  display:flex;
+  gap:8px;
+  padding:0 14px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.control-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:8px 14px;
+  font-size:12px;
+  color:var(--text-strong);
+  cursor:pointer;
+  transition:.2s;
+  font-family:Tahoma,sans-serif;
+}
+.control-btn:hover{
+  border-color:var(--turquoise);
+  background:var(--surface-2);
+}
+
+.episode-list{
+  padding:0 14px;
+  margin-bottom:24px;
+}
+.episode{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+.episode:hover{
+  border-color:rgba(45,212,191,.5);
+  background:var(--surface-2);
+}
+.episode .ep-num{
+  width:38px;height:38px;
+  border-radius:10px;
+  background:var(--grad);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:bold;
+  font-size:14px;
+  flex-shrink:0;
+}
+.episode .ep-info{flex:1}
+.episode .ep-info b{
+  display:block;
+  font-size:13px;
+  color:var(--text-strong);
+  margin-bottom:3px;
+}
+.episode .ep-info small{
+  color:var(--muted);
+  font-size:11px;
+}
+.episode.current{
+  border-color:var(--turquoise);
+  background:rgba(45,212,191,.06);
+}
+
+.empty{
+  padding:40px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+.empty .icon{
+  font-size:50px;
+  margin-bottom:14px;
+  opacity:.4;
+}
+.empty h3{
+  font-size:15px;
+  color:var(--text-strong);
+  margin-bottom:6px;
+}
+.empty p{font-size:12px;line-height:1.7}
+
+/* ============ استایل ادمین ============ */
+.admin-login-wrap{
+  padding:40px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:60vh;
+}
+.admin-login-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px 24px;
+  max-width:400px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 15px 50px rgba(0,0,0,.6);
+}
+.admin-lock{
+  font-size:56px;
+  margin-bottom:14px;
+}
+.admin-login-box h2{
+  font-size:20px;
+  color:var(--text-strong);
+  margin-bottom:8px;
+}
+.admin-login-box .desc{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.8;
+  margin-bottom:20px;
+}
+.admin-login-box input{
+  width:100%;
+  background:var(--bg);
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  color:var(--text-strong);
+  font-size:16px;
+  outline:none;
+  text-align:center;
+  font-family:Tahoma,sans-serif;
+  letter-spacing:3px;
+  transition:.2s;
+}
+.admin-login-box input:focus{
+  border-color:var(--turquoise);
+  box-shadow:0 0 0 4px rgba(45,212,191,.15);
+}
+.admin-error{
+  color:#f87171;
+  font-size:13px;
+  margin-top:12px;
+  min-height:18px;
+  font-weight:bold;
+}
+.admin-hint{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:16px;
+}
+.admin-hint b{
+  color:var(--turquoise-soft);
+  background:rgba(45,212,191,.1);
+  padding:3px 10px;
+  border-radius:6px;
+  letter-spacing:1px;
+}
+
+.admin-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  padding:0 14px;
+  margin-bottom:20px;
+}
+.admin-stat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 6px;
+  text-align:center;
+  transition:.2s;
+}
+.admin-stat:hover{
+  border-color:rgba(45,212,191,.5);
+  transform:translateY(-3px);
+}
+.admin-stat-icon{font-size:22px;margin-bottom:6px}
+.admin-stat b{
+  display:block;font-size:17px;
+  background:var(--grad-soft);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;margin-bottom:2px;
+}
+.admin-stat span{font-size:10px;color:var(--muted)}
+
+.admin-tabs{
+  display:flex;gap:6px;
+  padding:0 14px;
+  margin-bottom:16px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.admin-tabs::-webkit-scrollbar{display:none}
+.admin-tab{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:9px 16px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.2s;
+  font-family:Tahoma,sans-serif;
+}
+.admin-tab.active{
+  background:var(--grad);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 4px 14px rgba(124,58,237,.4);
+}
+.admin-content{display:none}
+.admin-content.active{display:block}
+
+.admin-chart{
+  display:flex;align-items:flex-end;justify-content:space-around;
+  height:180px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 10px 26px;
+  gap:8px;
+}
+.admin-chart .bar{
+  flex:1;background:var(--grad);
+  border-radius:8px 8px 0 0;
+  position:relative;transition:.3s;
+  min-height:10px;opacity:.85;
+}
+.admin-chart .bar:hover{opacity:1}
+.admin-chart .bar span{
+  position:absolute;bottom:-22px;left:50%;
+  transform:translateX(-50%);
+  font-size:11px;color:var(--muted);
+}
+
+.admin-activity{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+}
+.activity-item{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--grad);flex-shrink:0;
+  box-shadow:0 0 10px rgba(45,212,191,.6);
+}
+.activity-info{flex:1}
+.activity-info b{
+  display:block;font-size:13px;
+  color:var(--text-strong);margin-bottom:3px;
+}
+.activity-info small{font-size:11px;color:var(--muted)}
+
+.admin-list{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+}
+.admin-list-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+}
+.admin-list-item:last-child{border-bottom:none}
+.admin-item-thumb{
+  width:44px;height:58px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;color:#fff;
+}
+.admin-item-thumb.user-thumb{
+  height:44px;width:44px;border-radius:50%;
+  background:var(--grad);
+}
+.admin-item-thumb.admin-user{
+  background:linear-gradient(135deg,#f59e0b,#dc2626);
+}
+.admin-item-info{flex:1;min-width:0}
+.admin-item-info b{
+  display:block;font-size:13px;
+  color:var(--text-strong);margin-bottom:3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.admin-item-info small{font-size:11px;color:var(--muted)}
+.admin-item-actions{display:flex;gap:6px;flex-shrink:0}
+.admin-btn{
+  background:var(--bg);
+  border:1px solid var(--border);
+  color:var(--text-strong);
+  padding:8px 11px;border-radius:8px;
+  cursor:pointer;font-size:13px;
+  transition:.2s;font-family:Tahoma,sans-serif;
+}
+.admin-btn:hover{
+  border-color:var(--turquoise);
+  background:var(--surface-2);
+}
+.admin-btn.delete:hover{border-color:#ef4444;color:#f87171}
+.admin-btn.approve{
+  color:var(--turquoise-soft);
+  font-size:11px;font-weight:bold;
+}
+
+.admin-comment{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:10px;
+}
+.admin-comment.pending{
+  border-color:rgba(245,158,11,.4);
+  background:linear-gradient(135deg,rgba(245,158,11,.05),var(--surface));
+}
+.admin-comment-head{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:8px;
+  flex-wrap:wrap;gap:6px;
+}
+.admin-comment-head b{font-size:13px;color:var(--turquoise-soft)}
+.admin-comment-head small{font-size:10px;color:var(--muted)}
+.admin-comment p{
+  font-size:12px;color:#c2cbdb;
+  line-height:1.7;margin-bottom:10px;
+}
+
+footer{
+  background:rgba(11,18,32,.9);
+  padding:20px;text-align:center;
+  color:var(--muted);font-size:11px;
+  border-top:1px solid var(--border);
+  margin-top:20px;
+}
+footer b{
+  font-size:16px;display:block;margin-bottom:6px;
+  background:var(--grad-soft);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+}
+
+.bottom-nav{
+  position:fixed;bottom:0;right:0;left:0;
+  background:rgba(11,18,32,.95);
+  backdrop-filter:blur(10px);
+  display:flex;justify-content:space-around;
+  padding:8px 0;
+  border-top:1px solid var(--border);
+  box-shadow:0 -2px 14px rgba(0,0,0,.5);
+  z-index:20;
+}
+.bottom-nav div{
+  text-align:center;
+  font-size:9px;
+  color:var(--muted);
+  cursor:pointer;
+  padding:4px 8px;
+  border-radius:10px;
+  transition:.2s;
+}
+.bottom-nav div.active{
+  color:var(--turquoise);
+  font-weight:bold;
+  background:rgba(45,212,191,.08);
+}
+.bottom-nav span{
+  display:block;font-size:20px;margin-bottom:2px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="showPage('home')">👁 موی کلوپ</div>
+  <div class="search">🔍 جستجو...</div>
+  <div class="login" onclick="showPage('profile')">ورود</div>
+</header>
+
+<nav class="top-nav">
+  <span class="active" data-page="home" onclick="showPage('home')">خانه</span>
+  <span data-page="movies" onclick="showPage('movies')">فیلم‌ها</span>
+  <span data-page="series" onclick="showPage('series')">سریال‌ها</span>
+  <span data-page="mymovies" onclick="showPage('mymovies')">فیلم‌های من</span>
+  <span data-page="saved" onclick="showPage('saved')">ذخیره‌شده</span>
+  <span data-page="watch" onclick="showPage('watch')">تماشا</span>
+  <span data-page="profile" onclick="showPage('profile')">پروفایل</span>
+  <span class="admin-link" onclick="showPage('admin')">🔐 ادمین</span>
+</nav>
+
+<!-- ============ صفحه خانه ============ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-badge">⭐ فیلم عجیب این هفته</div>
+    <h1>Eraserhead</h1>
+    <p>۱۹۷۷ | دیوید لینچ</p>
+    <p>⭐ امتیاز کلوپ: ۹.۲</p>
+    <div style="margin-top:8px">
+      <span class="hero-tag">سورئال</span>
+      <span class="hero-tag">ترسناک روانی</span>
+      <span class="hero-tag">کالت</span>
+    </div>
+    <div class="hero-btns">
+      <button class="btn btn-play" onclick="showPage('watch')">▶ تماشا</button>
+      <button class="btn btn-list" onclick="showPage('saved')">+ لیست من</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🚀 شاهکارهای علمی‌تخیلی</h2><a onclick="showPage('movies')">همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">TOP</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" data-title="Inception" data-year="2010" onerror="posterFallback(this)" alt="Inception">
+        <div class="card-info"><b>Inception</b><small>⭐ ۹.۰</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کلاسیک</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" data-title="Interstellar" data-year="2014" onerror="posterFallback(this)" alt="Interstellar">
+        <div class="card-info"><b>Interstellar</b><small>⭐ ۹.۱</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">نئون</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg" data-title="Blade Runner 2049" data-year="2017" onerror="posterFallback(this)" alt="Blade Runner">
+        <div class="card-info"><b>Blade Runner 2049</b><small>⭐ ۸.۸</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کالت</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg" data-title="The Matrix" data-year="1999" onerror="posterFallback(this)" alt="Matrix">
+        <div class="card-info"><b>The Matrix</b><small>⭐ ۹.۰</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذهن‌پیچ</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/4YRplSk6BhH6PRuE9gfyw9B2qaz.jpg" data-title="Annihilation" data-year="2018" onerror="posterFallback(this)" alt="Annihilation">
+        <div class="card-info"><b>Annihilation</b><small>⭐ ۸.۰</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🧠 روانی و ترسناک</h2><a onclick="showPage('movies')">همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">شاهکار</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/b6ko0IKC8MdYBBPkkA1aBPLe2yz.jpg" data-title="The Shining" data-year="1980" onerror="posterFallback(this)" alt="Shining">
+        <div class="card-info"><b>The Shining</b><small>⭐ ۹.۲</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کالت</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/fhQoQfejY1hUcwyuLgpBrYs6uFt.jpg" data-title="Donnie Darko" data-year="2001" onerror="posterFallback(this)" alt="Donnie Darko">
+        <div class="card-info"><b>Donnie Darko</b><small>⭐ ۸.۵</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">اعتراضی</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg" data-title="Fight Club" data-year="1999" onerror="posterFallback(this)" alt="Fight Club">
+        <div class="card-info"><b>Fight Club</b><small>⭐ ۸.۸</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">سورئال</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/x7A8nKVLPGnVvLgJkBQ5mzR2wVO.jpg" data-title="Mulholland Drive" data-year="2001" onerror="posterFallback(this)" alt="Mulholland">
+        <div class="card-info"><b>Mulholland Drive</b><small>⭐ ۹.۰</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">عجیب</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7Y9ILV1unpW9mLpFcRk8HnUsr6W.jpg" data-title="The Lobster" data-year="2015" onerror="posterFallback(this)" alt="Lobster">
+        <div class="card-info"><b>The Lobster</b><small>⭐ ۸.۵</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>💬 نظرات اعضای کلوپ</h2></div>
+    <div class="quote">
+      <p>«Eraserhead رو سه بار دیدم، هر بار یه چیز جدید فهمیدم. اون صدای نوزاد هنوز توی گوشمه...»</p>
+      <div class="user">🎭 سارا</div>
+      <div class="film">درباره: Eraserhead</div>
+    </div>
+    <div class="quote">
+      <p>«Mulholland Drive شاهکاره. لینچ ثابت می‌کنه خواب و واقعیت مرز ندارن.»</p>
+      <div class="user">🎭 امیر</div>
+      <div class="film">درباره: Mulholland Drive</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه فیلم‌ها ============ -->
+<div class="page" id="page-movies">
+
+  <div class="hero">
+    <div class="hero-badge">🎬 آرشیو فیلم‌ها</div>
+    <h1>کلوب فیلم‌های عجیب</h1>
+    <p>مجموعه‌ای از عجیب‌ترین و نایاب‌ترین فیلم‌های جهان</p>
+    <div class="hero-btns">
+      <button class="btn btn-play">🔍 فیلتر ژانر</button>
+      <button class="btn btn-list">🎲 تصادفی</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🎨 هنری و آوانگارد</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کالت</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7ZbbUdTZiZKuKcMVKLY0tS5Xq3A.jpg" data-title="Eraserhead" data-year="1977" onerror="posterFallback(this)" alt="Eraserhead">
+        <div class="card-info"><b>Eraserhead</b><small>⭐ ۹.۲</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فرانسوی</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/9jAdw6S8qH6d2pvx5PWfS8gK5sB.jpg" data-title="Holy Motors" data-year="2012" onerror="posterFallback(this)" alt="Holy Motors">
+        <div class="card-info"><b>Holy Motors</b><small>⭐ ۸.۳</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">جسمی</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/o8DpCf1WfL5s5TtO6tXr8BnwS6m.jpg" data-title="Titane" data-year="2021" onerror="posterFallback(this)" alt="Titane">
+        <div class="card-info"><b>Titane</b><small>⭐ ۸.۴</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">مجار</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7w5mJ2X4zYvV3QpN1sKx9fR0cWt.jpg" data-title="Taxidermia" data-year="2006" onerror="posterFallback(this)" alt="Taxidermia">
+        <div class="card-info"><b>Taxidermia</b><small>⭐ ۸.۱</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🌍 فیلم‌های مطرح جهان</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کره‌ای</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" data-title="Parasite" data-year="2019" onerror="posterFallback(this)" alt="Parasite">
+        <div class="card-info"><b>Parasite</b><small>⭐ ۹.۳</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کره‌ای</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/pWDtjs568ZfOTMbURQBYuT4Qxka.jpg" data-title="Oldboy" data-year="2003" onerror="posterFallback(this)" alt="Oldboy">
+        <div class="card-info"><b>Oldboy</b><small>⭐ ۸.۹</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فرانسوی</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/oTKduWL1013aKqUzmAfL3Z7FdKz.jpg" data-title="Amélie" data-year="2001" onerror="posterFallback(this)" alt="Amélie">
+        <div class="card-info"><b>Amélie</b><small>⭐ ۸.۷</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">انیمه</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg" data-title="Spirited Away" data-year="2001" onerror="posterFallback(this)" alt="Spirited">
+        <div class="card-info"><b>Spirited Away</b><small>⭐ ۸.۶</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🏆 برترین‌های تاریخ</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">#۱</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/d4KNaTrltq6bpkFSO1pYtyXa09m.jpg" data-title="The Godfather" data-year="1972" onerror="posterFallback(this)" alt="Godfather">
+        <div class="card-info"><b>The Godfather</b><small>⭐ ۹.۲</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">#۲</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/lhRoyzDtpgMU7Dz4JF22RANzQO7.jpg" data-title="The Dark Knight" data-year="2008" onerror="posterFallback(this)" alt="DK">
+        <div class="card-info"><b>The Dark Knight</b><small>⭐ ۹.۰</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کالت</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/gvcmojRlugPmtwC7gNUdRxzgzkP.jpg" data-title="Pulp Fiction" data-year="1994" onerror="posterFallback(this)" alt="Pulp">
+        <div class="card-info"><b>Pulp Fiction</b><small>⭐ ۸.۹</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">درام</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg" data-title="Forrest Gump" data-year="1994" onerror="posterFallback(this)" alt="Gump">
+        <div class="card-info"><b>Forrest Gump</b><small>⭐ ۸.۸</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه سریال‌ها ============ -->
+<div class="page" id="page-series">
+
+  <div class="hero">
+    <div class="hero-badge">📺 سریال‌های مطرح</div>
+    <h1>سریال‌های فراموش‌نشدنی</h1>
+    <p>از برکینگ بد تا خانه کاغذی و فراتر از اون</p>
+    <div class="hero-btns">
+      <button class="btn btn-play" onclick="showPage('watch')">▶ ادامه تماشا</button>
+      <button class="btn btn-list" onclick="showPage('saved')">+ لیست من</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🧪 برکینگ بد</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فصل ۱</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad S1" data-year="2008" onerror="posterFallback(this)" alt="BB1">
+        <div class="card-info"><b>فصل اول</b><small>⭐ ۹.۲</small></div>
+        <div class="card-progress"><span style="width:100%"></span></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فصل ۲</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad S2" data-year="2009" onerror="posterFallback(this)" alt="BB2">
+        <div class="card-info"><b>فصل دوم</b><small>⭐ ۹.۴</small></div>
+        <div class="card-progress"><span style="width:100%"></span></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فصل ۳</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad S3" data-year="2010" onerror="posterFallback(this)" alt="BB3">
+        <div class="card-info"><b>فصل سوم</b><small>⭐ ۹.۵</small></div>
+        <div class="card-progress"><span style="width:45%"></span></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فصل ۴</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad S4" data-year="2011" onerror="posterFallback(this)" alt="BB4">
+        <div class="card-info"><b>فصل چهارم</b><small>⭐ ۹.۶</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">فصل ۵</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad S5" data-year="2012" onerror="posterFallback(this)" alt="BB5">
+        <div class="card-info"><b>فصل پنجم</b><small>⭐ ۹.۸</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🏦 خانه کاغذی</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">پارت ۱</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel 1" data-year="2017" onerror="posterFallback(this)" alt="LCDP1">
+        <div class="card-info"><b>پارت اول</b><small>⭐ ۸.۶</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">پارت ۲</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel 2" data-year="2018" onerror="posterFallback(this)" alt="LCDP2">
+        <div class="card-info"><b>پارت دوم</b><small>⭐ ۸.۸</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">پارت ۳</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel 3" data-year="2019" onerror="posterFallback(this)" alt="LCDP3">
+        <div class="card-info"><b>پارت سوم</b><small>⭐ ۸.۵</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">پارت ۴</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel 4" data-year="2020" onerror="posterFallback(this)" alt="LCDP4">
+        <div class="card-info"><b>پارت چهارم</b><small>⭐ ۸.۷</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">پارت ۵</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel 5" data-year="2021" onerror="posterFallback(this)" alt="LCDP5">
+        <div class="card-info"><b>پارت پنجم</b><small>⭐ ۸.۹</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>👽 علمی‌تخیلی و عجیب</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">نتفلیکس</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/49WJfeN0moxb9IPfGn8AIqMGskD.jpg" data-title="Stranger Things" data-year="2016" onerror="posterFallback(this)" alt="ST">
+        <div class="card-info"><b>Stranger Things</b><small>⭐ ۸.۷</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">دارک</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg" data-title="Dark" data-year="2017" onerror="posterFallback(this)" alt="Dark">
+        <div class="card-info"><b>Dark</b><small>⭐ ۸.۸</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">حماسی</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg" data-title="Game of Thrones" data-year="2011" onerror="posterFallback(this)" alt="GoT">
+        <div class="card-info"><b>Game of Thrones</b><small>⭐ ۹.۲</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ترسناک</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" data-title="Chernobyl" data-year="2019" onerror="posterFallback(this)" alt="Chernobyl">
+        <div class="card-info"><b>Chernobyl</b><small>⭐ ۹.۴</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه فیلم‌های من ============ -->
+<div class="page" id="page-mymovies">
+
+  <div class="hero">
+    <div class="hero-badge">🎥 کتابخانه‌ی من</div>
+    <h1>فیلم‌های من</h1>
+    <p>آرشیو شخصی و کلکسیون فیلم‌های موردعلاقه‌ی تو</p>
+    <div class="hero-btns">
+      <button class="btn btn-play">📤 آپلود فیلم</button>
+      <button class="btn btn-list">➕ افزودن به کلکسیون</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>۲۴۷</b><span>فیلم ذخیره</span></div>
+    <div class="stat"><b>۸۶</b><span>ساعت تماشا</span></div>
+    <div class="stat"><b>۱۲</b><span>کلکسیون</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>⭐ علاقه‌مندی‌های من</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کالت</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7ZbbUdTZiZKuKcMVKLY0tS5Xq3A.jpg" data-title="Eraserhead" data-year="1977" onerror="posterFallback(this)" alt="Era">
+        <div class="card-info"><b>Eraserhead</b><small>⭐ ۹.۲</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">TOP</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" data-title="Inception" data-year="2010" onerror="posterFallback(this)" alt="Inc">
+        <div class="card-info"><b>Inception</b><small>⭐ ۹.۰</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">کره‌ای</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" data-title="Parasite" data-year="2019" onerror="posterFallback(this)" alt="Par">
+        <div class="card-info"><b>Parasite</b><small>⭐ ۹.۳</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">سورئال</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/x7A8nKVLPGnVvLgJkBQ5mzR2wVO.jpg" data-title="Mulholland Drive" data-year="2001" onerror="posterFallback(this)" alt="Mul">
+        <div class="card-info"><b>Mulholland Drive</b><small>⭐ ۹.۰</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>📼 کلکسیون‌های من</h2></div>
+    <div class="genres">
+      <span class="genre">🎬 علمی‌تخیلی</span>
+      <span class="genre">👁 سورئال</span>
+      <span class="genre">🧠 روانی</span>
+      <span class="genre">🌍 خارجی</span>
+      <span class="genre">🏆 برترین‌ها</span>
+      <span class="genre">📺 سریال‌ها</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه ذخیره‌شده‌ها ============ -->
+<div class="page" id="page-saved">
+
+  <div class="hero">
+    <div class="hero-badge">🔖 واچ‌لیست</div>
+    <h1>ذخیره‌شده‌ها</h1>
+    <p>فیلم‌ها و سریال‌هایی که برای بعد ذخیره کردی</p>
+    <div class="hero-btns">
+      <button class="btn btn-play">🔀 مرتب‌سازی</button>
+      <button class="btn btn-list">🗑 پاک‌سازی</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🎬 فیلم‌های ذخیره‌شده</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/b6ko0IKC8MdYBBPkkA1aBPLe2yz.jpg" data-title="The Shining" data-year="1980" onerror="posterFallback(this)" alt="Shine">
+        <div class="card-info"><b>The Shining</b><small>⭐ ۹.۲</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/fhQoQfejY1hUcwyuLgpBrYs6uFt.jpg" data-title="Donnie Darko" data-year="2001" onerror="posterFallback(this)" alt="DD">
+        <div class="card-info"><b>Donnie Darko</b><small>⭐ ۸.۵</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg" data-title="Fight Club" data-year="1999" onerror="posterFallback(this)" alt="FC">
+        <div class="card-info"><b>Fight Club</b><small>⭐ ۸.۸</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/7Y9ILV1unpW9mLpFcRk8HnUsr6W.jpg" data-title="The Lobster" data-year="2015" onerror="posterFallback(this)" alt="Lob">
+        <div class="card-info"><b>The Lobster</b><small>⭐ ۸.۵</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>📺 سریال‌های ذخیره‌شده</h2><a>همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad" data-year="2008" onerror="posterFallback(this)" alt="BB">
+        <div class="card-info"><b>Breaking Bad</b><small>⭐ ۹.۵</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel" data-year="2017" onerror="posterFallback(this)" alt="LCDP">
+        <div class="card-info"><b>La Casa de Papel</b><small>⭐ ۸.۸</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/49WJfeN0moxb9IPfGn8AIqMGskD.jpg" data-title="Stranger Things" data-year="2016" onerror="posterFallback(this)" alt="ST">
+        <div class="card-info"><b>Stranger Things</b><small>⭐ ۸.۷</small></div>
+      </div>
+      <div class="card" onclick="showPage('watch')"><span class="card-badge">ذخیره</span>
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg" data-title="Dark" data-year="2017" onerror="posterFallback(this)" alt="Dark">
+        <div class="card-info"><b>Dark</b><small>⭐ ۸.۸</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه تماشا ============ -->
+<div class="page" id="page-watch">
+
+  <div class="hero" style="padding:18px 20px">
+    <div class="hero-badge">▶ در حال تماشا</div>
+    <h1 style="font-size:20px">Breaking Bad — فصل ۳، قسمت ۷</h1>
+    <p>۲۰۰۸ | وینس گیلیگان</p>
+    <div style="margin-top:8px">
+      <span class="hero-tag">جنایی</span>
+      <span class="hero-tag">درام</span>
+      <span class="hero-tag">هیجانی</span>
+    </div>
+  </div>
+
+  <div class="watch-player">
+    <div class="play-icon">▶</div>
+  </div>
+
+  <div class="watch-controls">
+    <button class="control-btn">🔊 صدا</button>
+    <button class="control-btn">⛶ تمام‌صفحه</button>
+    <button class="control-btn">⚙ کیفیت: ۱۰۸۰p</button>
+    <button class="control-btn" onclick="showPage('saved')">🔖 ذخیره</button>
+    <button class="control-btn">⬇ دانلود</button>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🎞 قسمت‌های این فصل</h2></div>
+    <div class="episode-list" style="padding:0">
+      <div class="episode"><div class="ep-num">۱</div><div class="ep-info"><b>قسمت اول — No Más</b><small>۴۷ دقیقه · ⭐ ۸.۶</small></div></div>
+      <div class="episode"><div class="ep-num">۲</div><div class="ep-info"><b>قسمت دوم — Caballo sin Nombre</b><small>۴۸ دقیقه · ⭐ ۸.۵</small></div></div>
+      <div class="episode"><div class="ep-num">۳</div><div class="ep-info"><b>قسمت سوم — I.F.T.</b><small>۴۸ دقیقه · ⭐ ۸.۴</small></div></div>
+      <div class="episode"><div class="ep-num">۴</div><div class="ep-info"><b>قسمت چهارم — Green Light</b><small>۴۸ دقیقه · ⭐ ۸.۳</small></div></div>
+      <div class="episode"><div class="ep-num">۵</div><div class="ep-info"><b>قسمت پنجم — Más</b><small>۴۷ دقیقه · ⭐ ۸.۷</small></div></div>
+      <div class="episode"><div class="ep-num">۶</div><div class="ep-info"><b>قسمت ششم — Sunset</b><small>۴۸ دقیقه · ⭐ ۹.۴</small></div></div>
+      <div class="episode current"><div class="ep-num">۷</div><div class="ep-info"><b>قسمت هفتم — One Minute ⟵ در حال پخش</b><small>۴۸ دقیقه · ⭐ ۹.۷</small></div></div>
+      <div class="episode"><div class="ep-num">۸</div><div class="ep-info"><b>قسمت هشتم — I See You</b><small>۴۸ دقیقه · ⭐ ۸.۹</small></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه پروفایل ============ -->
+<div class="page" id="page-profile">
+
+  <div class="profile-head">
+    <div class="avatar">👤</div>
+    <h2>کاربر مهمان</h2>
+    <div class="username">@movi_club_user</div>
+    <p class="bio">عضو کلوب فیلم‌های عجیب | عاشق سینمای سورئال و کالت</p>
+    <div class="profile-btns">
+      <button class="btn btn-play btn-small">✏ ویرایش</button>
+      <button class="btn btn-list btn-small">🔗 اشتراک</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>۱۴۲</b><span>فیلم دیده</span></div>
+    <div class="stat"><b>۳۸</b><span>توی لیست</span></div>
+    <div class="stat"><b>۲۷</b><span>نظر داده</span></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>🎬 ادامه تماشا</h2><a onclick="showPage('watch')">همه ←</a></div>
+    <div class="row">
+      <div class="card" onclick="showPage('watch')">
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg" data-title="Breaking Bad" data-year="فصل ۳" onerror="posterFallback(this)" alt="BB">
+        <div class="card-info"><b>Breaking Bad</b><small>⏱ فصل ۳ · قسمت ۷</small></div>
+        <div class="card-progress"><span style="width:45%"></span></div>
+      </div>
+      <div class="card" onclick="showPage('watch')">
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" data-title="Interstellar" data-year="2014" onerror="posterFallback(this)" alt="Int">
+        <div class="card-info"><b>Interstellar</b><small>⏱ ۴۵ دقیقه مونده</small></div>
+        <div class="card-progress"><span style="width:70%"></span></div>
+      </div>
+      <div class="card" onclick="showPage('watch')">
+        <img src="https://images.weserv.nl/?url=image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg" data-title="La Casa de Papel" data-year="پارت ۲" onerror="posterFallback(this)" alt="LCDP">
+        <div class="card-info"><b>La Casa de Papel</b><small>⏱ پارت ۲ · قسمت ۳</small></div>
+        <div class="card-progress"><span style="width:22%"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>💬 آخرین نظرات من</h2><a>همه ←</a></div>
+    <div class="quote">
+      <p>«Eraserhead واقعاً تجربه‌ی عجیبی بود. صدای نوزاد تا هفته‌ها تو ذهنم موند.»</p>
+      <div class="user">🎭 من</div>
+      <div class="film">درباره: Eraserhead · ۲ روز پیش</div>
+    </div>
+    <div class="quote">
+      <p>«Parasite یکی از بهترین فیلم‌های کره‌ایه. پایانش غیرقابل پیش‌بینی بود.»</p>
+      <div class="user">🎭 من</div>
+      <div class="film">درباره: Parasite · ۵ روز پیش</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>⚙ تنظیمات</h2></div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="alert('🔔 تنظیمات اعلان')">
+        <div class="right"><div class="icon">🔔</div>اعلان‌ها</div>
+        <div class="arrow">←</div>
+      </div>
+      <div class="menu-item" onclick="alert('🌙 حالت تاریک فعاله')">
+        <div class="right"><div class="icon">🌙</div>حالت تاریک</div>
+        <div class="value">فعال</div>
+      </div>
+      <div class="menu-item" onclick="alert('🎨 رنگ: فیروزه‌ای')">
+        <div class="right"><div class="icon">🎨</div>رنگ تم</div>
+        <div class="value">فیروزه‌ای</div>
+      </div>
+      <div class="menu-item" onclick="alert('🌐 زبان: فارسی')">
+        <div class="right"><div class="icon">🌐</div>زبان</div>
+        <div class="value">فارسی</div>
+      </div>
+      <div class="menu-item" onclick="alert('💾 حافظه: ۱۲۴ MB')">
+        <div class="right"><div class="icon">💾</div>حافظه‌ی کش</div>
+        <div class="value">۱۲۴ MB</div>
+      </div>
+      <div class="menu-item" onclick="alert('❓ راهنما')">
+        <div class="right"><div class="icon">❓</div>راهنما و پشتیبانی</div>
+        <div class="arrow">←</div>
+      </div>
+
+      <div class="menu-item admin-access" onclick="showPage('admin')">
+        <div class="right">
+          <div class="icon">🔐</div>
+          ورود به پنل ادمین
+        </div>
+        <div class="arrow">←</div>
+      </div>
+
+      <div class="menu-item" onclick="alert('🚪 خارج شدی')">
+        <div class="right"><div class="icon">🚪</div>خروج از حساب</div>
+        <div class="arrow">←</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ صفحه ادمین ============ -->
+<div class="page" id="page-admin">
+
+  <!-- ورود ادمین -->
+  <div id="admin-login" class="admin-login-wrap">
+    <div class="admin-login-box">
+      <div class="admin-lock">🔐</div>
+      <h2>ورود مدیر</h2>
+      <p class="desc">برای دسترسی به پنل مدیریت، رمز عبور رو وارد کن</p>
+
+      <input type="password" id="admin-pass" placeholder="• • • • • • • •" onkeydown="if(event.key==='Enter')adminLogin()">
+      <div class="admin-error" id="admin-error"></div>
+
+      <button class="btn btn-play" style="width:100%;margin-top:16px" onclick="adminLogin()">🔓 ورود به پنل</button>
+
+      <p class="admin-hint">رمز پیش‌فرض: <b>admin123</b></p>
+    </div>
+  </div>
+
+  <!-- پنل ادمین -->
+  <div id="admin-panel" style="display:none">
+
+    <div class="hero" style="padding:20px">
+      <div class="hero-badge">✅ خوش آمدی مدیر</div>
+      <h1 style="font-size:22px">پنل مدیریت موی کلوپ</h1>
+      <p>کنترل کامل سایت اینجاست</p>
+      <div class="hero-btns">
+        <button class="btn btn-play" style="width:auto" onclick="adminLogout()">🚪 خروج از پنل</button>
+      </div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat">
+        <div class="admin-stat-icon">🎬</div>
+        <b>۲۴۷</b>
+        <span>فیلم</span>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-icon">📺</div>
+        <b>۵۶</b>
+        <span>سریال</span>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-icon">👥</div>
+        <b>۱٬۲۳۴</b>
+        <span>کاربر</span>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-icon">💬</div>
+        <b>۸۹۲</b>
+        <span>نظر</span>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-atab="dashboard" onclick="showAdminTab('dashboard')">📊 داشبورد</button>
+      <button class="admin-tab" data-atab="movies" onclick="showAdminTab('movies')">🎬 فیلم‌ها</button>
+      <button class="admin-tab" data-atab="series" onclick="showAdminTab('series')">📺 سریال‌ها</button>
+      <button class="admin-tab" data-atab="users" onclick="showAdminTab('users')">👥 کاربران</button>
+      <button class="admin-tab" data-atab="comments" onclick="showAdminTab('comments')">💬 نظرات</button>
+      <button class="admin-tab" data-atab="settings" onclick="showAdminTab('settings')">⚙ تنظیمات</button>
+    </div>
+
+    <!-- داشبورد -->
+    <div class="admin-content active" id="atab-dashboard">
+      <div class="section">
+        <div class="section-head"><h2>📈 بازدید هفته</h2></div>
+        <div class="admin-chart">
+          <div class="bar" style="height:40%"><span>شنبه</span></div>
+          <div class="bar" style="height:65%"><span>یک‌شنبه</span></div>
+          <div class="bar" style="height:50%"><span>دوشنبه</span></div>
+          <div class="bar" style="height:80%"><span>سه‌شنبه</span></div>
+          <div class="bar" style="height:95%"><span>چهارشنبه</span></div>
+          <div class="bar" style="height:70%"><span>پنج‌شنبه</span></div>
+          <div class="bar" style="height:55%"><span>جمعه</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><h2>🔥 آخرین فعالیت‌ها</h2></div>
+        <div class="admin-activity">
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-info">
+              <b>فیلم جدید اضافه شد</b>
+              <small>Oppenheimer · ۵ دقیقه پیش</small>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-info">
+              <b>کاربر جدید ثبت‌نام کرد</b>
+              <small>@ali_movie · ۲۰ دقیقه پیش</small>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-info">
+              <b>نظر جدید در انتظار تأیید</b>
+              <small>درباره: Parasite · ۱ ساعت پیش</small>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-info">
+              <b>سریال جدید اضافه شد</b>
+              <small>The Last of Us · ۲ ساعت پیش</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- فیلم‌ها -->
+    <div class="admin-content" id="atab-movies">
+      <div class="section">
+        <div class="section-head">
+          <h2>🎬 لیست فیلم‌ها</h2>
+          <a onclick="alert('➕ فرم افزودن فیلم (به زودی)')">➕ افزودن</a>
+        </div>
+        <div class="admin-list">
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#0f766e,#4c1d95)">🎬</div>
+            <div class="admin-item-info">
+              <b>Eraserhead</b>
+              <small>۱۹۷۷ · سورئال · ⭐ ۹.۲</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش Eraserhead')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('Eraserhead')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#0e7490,#6d28d9)">🎬</div>
+            <div class="admin-item-info">
+              <b>Inception</b>
+              <small>۲۰۱۰ · علمی‌تخیلی · ⭐ ۹.۰</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش Inception')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('Inception')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#155e75,#7c3aed)">🎬</div>
+            <div class="admin-item-info">
+              <b>Parasite</b>
+              <small>۲۰۱۹ · کره‌ای · ⭐ ۹.۳</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش Parasite')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('Parasite')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#115e59,#5b21b6)">🎬</div>
+            <div class="admin-item-info">
+              <b>The Shining</b>
+              <small>۱۹۸۰ · ترسناک · ⭐ ۹.۲</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش The Shining')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('The Shining')">🗑</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- سریال‌ها -->
+    <div class="admin-content" id="atab-series">
+      <div class="section">
+        <div class="section-head">
+          <h2>📺 لیست سریال‌ها</h2>
+          <a onclick="alert('➕ فرم افزودن سریال (به زودی)')">➕ افزودن</a>
+        </div>
+        <div class="admin-list">
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#0f766e,#4c1d95)">📺</div>
+            <div class="admin-item-info">
+              <b>Breaking Bad</b>
+              <small>۵ فصل · ۶۲ قسمت · ⭐ ۹.۵</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش Breaking Bad')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('Breaking Bad')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#0e7490,#6d28d9)">📺</div>
+            <div class="admin-item-info">
+              <b>La Casa de Papel</b>
+              <small>۵ پارت · ۴۱ قسمت · ⭐ ۸.۸</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش La Casa de Papel')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('La Casa de Papel')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#155e75,#7c3aed)">📺</div>
+            <div class="admin-item-info">
+              <b>Stranger Things</b>
+              <small>۴ فصل · ۳۴ قسمت · ⭐ ۸.۷</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش Stranger Things')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('Stranger Things')">🗑</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- کاربران -->
+    <div class="admin-content" id="atab-users">
+      <div class="section">
+        <div class="section-head">
+          <h2>👥 لیست کاربران</h2>
+          <a onclick="alert('➕ فرم افزودن کاربر (به زودی)')">➕ افزودن</a>
+        </div>
+        <div class="admin-list">
+          <div class="admin-list-item">
+            <div class="admin-item-thumb user-thumb">👤</div>
+            <div class="admin-item-info">
+              <b>سارا محمدی</b>
+              <small>@sara_m · ۱۴۲ فیلم دیده</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش سارا')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('سارا محمدی')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb user-thumb">👤</div>
+            <div class="admin-item-info">
+              <b>امیر رضایی</b>
+              <small>@amir_r · ۸۹ فیلم دیده</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش امیر')">✏</button>
+              <button class="admin-btn delete" onclick="delItem('امیر رضایی')">🗑</button>
+            </div>
+          </div>
+          <div class="admin-list-item">
+            <div class="admin-item-thumb user-thumb admin-user">👑</div>
+            <div class="admin-item-info">
+              <b>مدیر کل</b>
+              <small>@admin · دسترسی کامل</small>
+            </div>
+            <div class="admin-item-actions">
+              <button class="admin-btn" onclick="alert('✏ ویرایش مدیر')">✏</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- نظرات -->
+    <div class="admin-content" id="atab-comments">
+      <div class="section">
+        <div class="section-head"><h2>💬 مدیریت نظرات</h2></div>
+        <div class="admin-comment">
+          <div class="admin-comment-head">
+            <b>🎭 سارا</b>
+            <small>درباره: Eraserhead · ۲ ساعت پیش</small>
+          </div>
+          <p>«Eraserhead رو سه بار دیدم، هر بار یه چیز جدید فهمیدم...»</p>
+          <div class="admin-item-actions">
+            <button class="admin-btn approve" onclick="alert('✓ تأیید شد')">✓ تأیید</button>
+            <button class="admin-btn delete" onclick="delItem('این نظر')">🗑 حذف</button>
+          </div>
+        </div>
+        <div class="admin-comment">
+          <div class="admin-comment-head">
+            <b>🎭 امیر</b>
+            <small>درباره: Mulholland Drive · ۵ ساعت پیش</small>
+          </div>
+          <p>«Mulholland Drive شاهکاره. لینچ ثابت می‌کنه خواب و واقعیت مرز ندارن.»</p>
+          <div class="admin-item-actions">
+            <button class="admin-btn approve" onclick="alert('✓ تأیید شد')">✓ تأیید</button>
+            <button class="admin-btn delete" onclick="delItem('این نظر')">🗑 حذف</button>
+          </div>
+        </div>
+        <div class="admin-comment pending">
+          <div class="admin-comment-head">
+            <b>🎭 نیلوفر</b>
+            <small>در انتظار تأیید · ۱۰ دقیقه پیش</small>
+          </div>
+          <p>«The Lobster عجیب‌ترین فیلمی بود که دیدم...»</p>
+          <div class="admin-item-actions">
+            <button class="admin-btn approve" onclick="alert('✓ تأیید شد')">✓ تأیید</button>
+            <button class="admin-btn delete" onclick="delItem('این نظر')">🗑 حذف</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تنظیمات -->
+    <div class="admin-content" id="atab-settings">
+      <div class="section">
+        <div class="section-head"><h2>⚙ تنظیمات سایت</h2></div>
+        <div class="menu-list">
+          <div class="menu-item" onclick="alert('✏ تغییر نام سایت')">
+            <div class="right"><div class="icon">🏷</div>نام سایت</div>
+            <div class="value">موی کلوپ</div>
+          </div>
+          <div class="menu-item" onclick="alert('🎨 تغییر رنگ')">
+            <div class="right"><div class="icon">🎨</div>رنگ اصلی</div>
+            <div class="value">فیروزه‌ای</div>
+          </div>
+          <div class="menu-item" onclick="alert('🔒 تأیید خودکار')">
+            <div class="right"><div class="icon">🔒</div>تأیید خودکار نظرات</div>
+            <div class="value">خاموش</div>
+          </div>
+          <div class="menu-item" onclick="alert('👤 ثبت‌نام')">
+            <div class="right"><div class="icon">👤</div>ثبت‌نام کاربران</div>
+            <div class="value">باز</div>
+          </div>
+          <div class="menu-item" onclick="changePassword()">
+            <div class="right"><div class="icon">🔑</div>تغییر رمز ادمین</div>
+            <div class="arrow">←</div>
+          </div>
+          <div class="menu-item" onclick="alert('💾 پشتیبان‌گیری انجام شد')">
+            <div class="right"><div class="icon">💾</div>پشتیبان‌گیری</div>
+            <div class="arrow">←</div>
+          </div>
+          <div class="menu-item" onclick="alert('🔄 بازنشانی داده‌ها')">
+            <div class="right"><div class="icon">🔄</div>بازنشانی داده‌ها</div>
+            <div class="arrow">←</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <b>👁 موی کلوپ</b>
+  کلوب فیلم‌های عجیب<br>
+  درباره کلوپ | قوانین | عضویت<br><br>
+  © ۲۰۲۶ موی کلوپ — تمامی حقوق محفوظ است
+</footer>
+
+<div class="bottom-nav">
+  <div class="active" data-page="home" onclick="showPage('home')"><span>🏠</span>خانه</div>
+  <div data-page="movies" onclick="showPage('movies')"><span>🎬</span>فیلم‌ها</div>
+  <div data-page="mymovies" onclick="showPage('mymovies')"><span>🎥</span>فیلم‌های من</div>
+  <div data-page="saved" onclick="showPage('saved')"><span>🔖</span>ذخیره‌شده</div>
+  <div data-page="profile" onclick="showPage('profile')"><span>👤</span>پروفایل</div>
+</div>
+
+<script>
+// ============================================
+// ناوبری صفحات
+// ============================================
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+
+  document.querySelectorAll('nav.top-nav span').forEach(s => {
+    s.classList.toggle('active', s.dataset.page === name);
+  });
+
+  document.querySelectorAll('.bottom-nav div').forEach(d => {
+    d.classList.toggle('active', d.dataset.page === name);
+  });
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ============================================
+// پوستر جانشین SVG
+// ============================================
+function makeSvgPoster(title, year) {
+  title = (title || 'فیلم').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  year = year || '';
+  const hash = title.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+  const colors = [
+    ['#0f766e','#4c1d95'],
+    ['#0e7490','#6d28d9'],
+    ['#155e75','#7c3aed'],
+    ['#115e59','#5b21b6'],
+    ['#134e4a','#4c1d95']
+  ];
+  const [c1, c2] = colors[hash % colors.length];
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450" width="300" height="450">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="${c1}"/>
+          <stop offset="1" stop-color="${c2}"/>
+        </linearGradient>
+      </defs>
+      <rect width="300" height="450" fill="url(#g)"/>
+      <circle cx="150" cy="180" r="60" fill="rgba(255,255,255,.06)"/>
+      <text x="150" y="200" text-anchor="middle" fill="#eef4fb" font-size="52" font-family="Tahoma">🎬</text>
+      <text x="150" y="280" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold" font-family="Tahoma">${title}</text>
+      <text x="150" y="312" text-anchor="middle" fill="#5eead4" font-size="14" font-family="Tahoma">${year}</text>
+    </svg>
+  `;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+window.posterFallback = function(img) {
+  const step = parseInt(img.dataset.step || '0');
+  const title = img.dataset.title || '';
+  const year = img.dataset.year || '';
+  if (step === 0) {
+    img.dataset.step = '1';
+    img.src = 'https://picsum.photos/seed/' + encodeURIComponent(title) + '/300/450';
+  } else {
+    img.onerror = null;
+    img.src = makeSvgPoster(title, year);
+  }
+};
+
+// ============================================
+// پنل ادمین
+// ============================================
+function getAdminPassword() {
+  return localStorage.getItem('admin_password') || 'admin123';
+}
+
+function adminLogin() {
+  const pass = document.getElementById('admin-pass').value;
+  const err = document.getElementById('admin-error');
+
+  if (pass === getAdminPassword()) {
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    err.textContent = '';
+    document.getElementById('admin-pass').value = '';
+    sessionStorage.setItem('admin_logged_in', 'true');
+  } else {
+    err.textContent = '❌ رمز عبور اشتباهه';
+    document.getElementById('admin-pass').value = '';
+    document.getElementById('admin-pass').focus();
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem('admin_logged_in');
+  document.getElementById('admin-login').style.display = 'flex';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-error').textContent = '';
+  document.getElementById('admin-pass').value = '';
+}
+
+function showAdminTab(name) {
+  document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('atab-' + name).classList.add('active');
+
+  document.querySelectorAll('.admin-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.atab === name);
+  });
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function delItem(name) {
+  if (confirm('آیا از حذف «' + name + '» مطمئنی؟')) {
+    alert('🗑 ' + name + ' حذف شد');
+  }
+}
+
+function changePassword() {
+  const current = prompt('رمز فعلی رو وارد کن:');
+  if (current !== getAdminPassword()) {
+    alert('❌ رمز فعلی اشتباهه');
+    return;
+  }
+  const newPass = prompt('رمز جدید رو وارد کن (حداقل ۴ کاراکتر):');
+  if (!newPass || newPass.length < 4) {
+    alert('❌ رمز باید حداقل ۴ کاراکتر باشه');
+    return;
+  }
+  localStorage.setItem('admin_password', newPass);
+  alert('✅ رمز با موفقیت تغییر کرد\n\nرمز جدید: ' + newPass);
+}
+</script>
+
+</body>
+</html>
