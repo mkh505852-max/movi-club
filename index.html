@@ -1828,7 +1828,31 @@ function changePassword() {
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);// Import Auth and Firestore
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Override old login function with Firebase Auth
+window.adminLogin = function() {
+    const email = prompt('ایمیل مدیر را وارد کنید:');
+    const password = prompt('رمز عبور را وارد کنید:');
+    
+    if (!email || !password) return;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            alert('✅ خوش آمدید! شما وارد شدید.');
+            document.getElementById('admin-login').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+        })
+        .catch((error) => {
+            alert('❌ خطا: ایمیل یا رمز عبور اشتباه است. (شاید هنوز کاربری در فایربیس نساخته‌اید)');
+            console.error(error);
+        });
+};
 </script>
 </body>
 </html>
