@@ -1516,11 +1516,32 @@ footer b{
     </div>
 
     <!-- فیلم‌ها -->
-    <div class="admin-content" id="atab-movies">
+    <div class="admin-content" id="atab-movies"> 
+      <!-- فرم افزودن فیلم -->
+<div class="section" id="add-movie-form" style="display:none; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px;">
+  <h3 style="color:var(--turquoise-soft); font-size:14px; margin-bottom:12px;">➕ افزودن فیلم جدید</h3>
+  
+  <input type="text" id="mv-title" placeholder="نام فیلم (مثلاً Inception)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
+  
+  <input type="text" id="mv-year" placeholder="سال ساخت (مثلاً 2010)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
+  
+  <input type="text" id="mv-rating" placeholder="امتیاز (مثلاً ۹.۰)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
+  
+  <input type="text" id="mv-poster" placeholder="لینک پوستر (https://...)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
+  
+  <input type="text" id="mv-badge" placeholder="برچسب (مثلاً کالت، TOP، جدید)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
+  
+  <input type="text" id="mv-video" placeholder="لینک ویدیو (اختیاری)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:12px; text-align:left;">
+  
+  <div style="display:flex; gap:8px;">
+    <button class="btn btn-play" style="flex:1; padding:12px; border-radius:10px;" onclick="saveMovie()">💾 ذخیره فیلم</button>
+    <button class="btn btn-list" style="flex:1; padding:12px; border-radius:10px;" onclick="toggleMovieForm()">❌ انصراف</button>
+  </div>
+</div>
       <div class="section">
         <div class="section-head">
           <h2>🎬 لیست فیلم‌ها</h2>
-          <a onclick="alert('➕ فرم افزودن فیلم (به زودی)')">➕ افزودن</a>
+          <a onclick="toggleMovieForm()">➕ افزودن</a>
         </div>
         <div class="admin-list">
           <div class="admin-list-item">
