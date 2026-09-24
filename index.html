@@ -1929,6 +1929,85 @@ function changePassword() {
               alert('❌ خطا: ایمیل یا رمز عبور اشتباه است.');
               console.error(error);
           });
-  };
+  }; 
+  // ============================================
+// سیستم ورود و ثبت‌نام
+// ============================================
+let isLoginMode = true;
+
+window.switchLoginMode = function() {
+  isLoginMode = !isLoginMode;
+  const title = document.getElementById('login-title');
+  const desc = document.getElementById('login-desc');
+  const btn = document.getElementById('login-btn');
+  const switchText = document.getElementById('login-switch');
+  document.getElementById('login-error').textContent = '';
+
+  if (isLoginMode) {
+    title.textContent = 'ورود به موی کلوپ';
+    desc.textContent = 'برای دسترسی به فیلم‌ها وارد شوید';
+    btn.textContent = 'ورود';
+    switchText.textContent = 'حساب ندارید؟ ثبت‌نام کنید';
+  } else {
+    title.textContent = 'ثبت‌نام در موی کلوپ';
+    desc.textContent = 'یه حساب جدید بسازید و عضو کلوپ شوید';
+    btn.textContent = 'ثبت‌نام';
+    switchText.textContent = 'حساب دارید؟ وارد شوید';
+  }
+};
+
+window.handleLogin = async function() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errorBox = document.getElementById('login-error');
+
+  errorBox.textContent = '';
+
+  if (!email || !password) {
+    errorBox.textContent = '❌ لطفاً ایمیل و رمز عبور را وارد کنید';
+    return;
+  }
+  if (password.length < 6) {
+    errorBox.textContent = '❌ رمز عبور باید حداقل ۶ کاراکتر باشد';
+    return;
+  }
+
+  try {
+    if (isLoginMode) {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert('✅ خوش آمدید!');
+      updateProfileUI(userCredential.user);
+      showPage('profile');
+    } else {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        email: email,
+        createdAt: new Date().toISOString(),
+        subscriptionPlan: null,
+        subscriptionStatus: "inactive"
+      });
+      alert('✅ ثبت‌نام موفق! خوش آمدید.');
+      updateProfileUI(userCredential.user);
+      showPage('profile');
+    }
+  } catch (error) {
+    console.error(error);
+    if (error.code === 'auth/user-not-found') errorBox.textContent = '❌ کاربری با این ایمیل پیدا نشد';
+    else if (error.code === 'auth/wrong-password') errorBox.textContent = '❌ رمز عبور اشتباه است';
+    else if (error.code === 'auth/email-already-in-use') errorBox.textContent = '❌ این ایمیل قبلاً ثبت شده';
+    else if (error.code === 'auth/invalid-email') errorBox.textContent = '❌ ایمیل نامعتبر است';
+    else if (error.code === 'auth/weak-password') errorBox.textContent = '❌ رمز عبور ضعیف است (حداقل ۶ کاراکتر)';
+    else errorBox.textContent = '❌ خطا: ' + error.message;
+  }
+};
+
+window.updateProfileUI = function(user) {
+  if (user) {
+    const nameEl = document.querySelector('.profile-head h2');
+    const userEl = document.querySelector('.profile-head .username');
+    if (nameEl) nameEl.textContent = user.email.split('@')[0];
+    if (userEl) userEl.textContent = '@' + user.email.split('@')[0];
+  }
+};
 </script>
 </html>
