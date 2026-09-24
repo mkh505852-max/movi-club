@@ -1844,14 +1844,13 @@ function changePassword() {
   localStorage.setItem('admin_password', newPass);
   alert('✅ رمز با موفقیت تغییر کرد\n\nرمز جدید: ' + newPass);
 }
+
 </script>
 <script type="module">
-  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyCz65fmWS6sB_ZU6d2X2Yq9IThLtJQn-s4",
     authDomain: "movi-club-fe383.firebaseapp.com",
@@ -1861,32 +1860,55 @@ function changePassword() {
     appId: "1:1071091867888:web:05523526ec8c291afba235"
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);// Import Auth and Firestore
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-const auth = getAuth(app);
-const db = getFirestore(app);
+  onAuthStateChanged(auth, (user) => {
+    const buttons = document.querySelectorAll('[data-plan]');
+    buttons.forEach(button => {
+      button.addEventListener('click', async (event) => {
+        if (!user) {
+          alert("لطفا ابتدا وارد حساب کاربری خود شوید.");
+          showPage('profile');
+          return;
+        }
+        const selectedPlan = event.target.getAttribute('data-plan');
+        try {
+          event.target.innerText = "در حال ثبت...";
+          event.target.disabled = true;
+          await updateDoc(doc(db, "users", user.uid), {
+            subscriptionPlan: selectedPlan,
+            subscriptionStatus: "pending",
+            requestDate: new Date().toISOString()
+          });
+          alert('پلن ' + selectedPlan + ' با موفقیت ثبت شد. در حال انتقال به درگاه پرداخت...');
+          event.target.innerText = "انتخاب و پرداخت";
+          event.target.disabled = false;
+        } catch (error) {
+          console.error("خطا در ذخیره:", error);
+          alert("مشکلی پیش آمد. لطفا دوباره تلاش کنید.");
+          event.target.innerText = "انتخاب و پرداخت";
+          event.target.disabled = false;
+        }
+      });
+    });
+  });
 
-// Override old login function with Firebase Auth
-window.adminLogin = function() {
-    const email = prompt('ایمیل مدیر را وارد کنید:');
-    const password = prompt('رمز عبور را وارد کنید:');
-    
-    if (!email || !password) return;
-
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            alert('✅ خوش آمدید! شما وارد شدید.');
-            document.getElementById('admin-login').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-        })
-        .catch((error) => {
-            alert('❌ خطا: ایمیل یا رمز عبور اشتباه است. (شاید هنوز کاربری در فایربیس نساخته‌اید)');
-            console.error(error);
-        });
-};
-</script>
-</body>
+  window.adminLogin = function() {
+      const email = prompt('ایمیل مدیر را وارد کنید:');
+      const password = prompt('رمز عبور را وارد کنید:');
+      if (!email || !password) return;
+      signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+              alert('✅ خوش آمدید! شما وارد شدید.');
+              document.getElementById('admin-login').style.display = 'none';
+              document.getElementById('admin-panel').style.display = 'block';
+          })
+          .catch((error) => {
+              alert('❌ خطا: ایمیل یا رمز عبور اشتباه است.');
+              console.error(error);
+          });
+  };
+</script></body>
 </html>
