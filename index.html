@@ -1,4 +1,4 @@
-
+ح
 
 
 
@@ -1341,7 +1341,28 @@ footer b{
     </div>
   </div>
 </div>
-<!-- ============ صفحه اشتراک ============ -->
+<!-- ============ صفحه اشتراک ============ --> 
+  <!-- ============ صفحه لاگین / ثبت‌نام ============ -->
+<div class="page" id="page-login">
+  <div class="admin-login-wrap">
+    <div class="admin-login-box">
+      <div class="admin-lock">🎬</div>
+      <h2 id="login-title">ورود به موی کلوپ</h2>
+      <p class="desc" id="login-desc">برای دسترسی به فیلم‌ها وارد شوید</p>
+
+      <input type="email" id="login-email" placeholder="ایمیل خود را وارد کنید" style="margin-bottom:10px; text-align:left; letter-spacing:0;">
+      <input type="password" id="login-password" placeholder="رمز عبور (حداقل ۶ کاراکتر)" style="margin-bottom:10px; text-align:left; letter-spacing:0;">
+      
+      <div class="admin-error" id="login-error"></div>
+
+      <button class="btn btn-play" style="width:100%;margin-top:10px" id="login-btn" onclick="handleLogin()">ورود</button>
+      
+      <p style="font-size:12px; color:var(--muted); margin-top:16px; cursor:pointer;">
+        <span id="login-switch" onclick="switchLoginMode()">حساب ندارید؟ ثبت‌نام کنید</span>
+      </p>
+    </div>
+  </div>
+</div>
 <div class="page" id="page-subscription">
   <div class="hero" style="padding:20px">
     <div class="hero-badge">💎 اشتراک ویژه</div>
