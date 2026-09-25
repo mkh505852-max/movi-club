@@ -2124,21 +2124,11 @@ window.alert = function(message) {
     }
   };
 
-  window.adminLogin = function() {
-      const email = prompt('ایمیل مدیر را وارد کنید:');
-      const password = prompt('رمز عبور را وارد کنید:');
-      if (!email || !password) return;
-      signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-              alert('✅ خوش آمدید! شما وارد شدید.');
-              document.getElementById('admin-login').style.display = 'none';
-              document.getElementById('admin-panel').style.display = 'block';
-          })
-          .catch((error) => {
-              alert('❌ خطا: ایمیل یا رمز عبور اشتباه است.');
-              console.error(error);
-          });
-  }; 
+  
+      
+      
+      
+  
   // ============================================
 // سیستم ورود و ثبت‌نام
 // ============================================
