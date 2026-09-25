@@ -1337,7 +1337,7 @@ footer b{
         <div class="arrow">←</div>
       </div>
 
-      <div class="menu-item" onclick="alert('🚪 خارج شدی')">
+      <div class="menu-item" onclick="handleLogout()">
         <div class="right"><div class="icon">🚪</div>خروج از حساب</div>
         <div class="arrow">←</div>
       </div>
@@ -2127,7 +2127,8 @@ window.loadAdminMovies = async function() {
   }
 };
 
-window.deleteMovie = async function(id, title) {
+window.deleteMovie = async function(id, title) { 
+  
   if (!confirm('آیا از حذف «' + title + '» مطمئنی؟')) return;
   try {
     const { deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
@@ -2136,6 +2137,16 @@ window.deleteMovie = async function(id, title) {
     loadAdminMovies();
   } catch (error) {
     alert('❌ خطا در حذف: ' + error.message);
+  }
+};
+  window.handleLogout = async function() {
+  try {
+    const { signOut } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+    await signOut(auth);
+    alert("خارج شدید");
+    showPage("home");
+  } catch (e) {
+    alert("خطا: " + e.message);
   }
 };
 </script>
