@@ -798,13 +798,25 @@ footer b{
 }
 .bottom-nav span{
   display:block;font-size:20px;margin-bottom:2px;
-}
+} 
+  /* ============ بَج اشتراک ============ */
+.sub-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:bold;margin-right:8px;cursor:pointer;transition:.2s}
+.sub-badge.active{background:rgba(45,212,191,.15);color:#5eead4;border:1px solid rgba(45,212,191,.5)}
+.sub-badge.pending{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.5)}
+.sub-badge.inactive{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.5)}
+.sub-badge:hover{opacity:.85}
+.sub-card{margin:14px;padding:16px 18px;border-radius:14px;background:var(--surface);border:1px solid var(--border)}
+.sub-card h3{font-size:13px;color:var(--turquoise-soft);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sub-card .sub-status{font-size:15px;font-weight:bold;color:var(--text-strong);margin-bottom:8px}
+.sub-card .sub-days{font-size:20px;font-weight:bold;background:var(--grad-soft);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0}
+.sub-card .sub-dates{font-size:11px;color:var(--muted);line-height:1.8;margin-top:8px}.profile-btns .sub-card{width:100%;margin:14px 0;display:block}.profile-btns .sub-card{width:100%;margin:14px 0;display:block}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo" onclick="showPage('home')">👁 موی کلوپ</div>
+  <div class="logo" onclick="showPage('home')">👁 موی کلوپ</div><div id="header-sub-badge"></div><div id="header-sub-badge"></div><div id="header-sub-badge"></div><div id="header-sub-badge"></div>
+  
   <div class="search">🔍 جستجو...</div>
   <div class="login" onclick="showPage('login')">ورود</div>
 </header>
@@ -1250,12 +1262,18 @@ footer b{
     <p class="bio">عضو کلوب فیلم‌های عجیب | عاشق سینمای سورئال و کالت</p>
     
   
-  <div class="profile-btns" style="flex-wrap:wrap;">
+  <div class="profile-btns" style="flex-wrap:wrap;"> 
+    
     <button class="btn btn-play btn-small" style="flex:1;">✏ ویرایش</button>
     <button class="btn btn-list btn-small" style="flex:1; background:var(--grad); color:#fff; border:none;" onclick="showPage('subscription')">💎 اشتراک ویژه</button>
   </div>
 </div>
-
+<div class="sub-card" id="profile-sub-card">
+  <h3>💎 وضعیت اشتراک</h3>
+  <div class="sub-status" id="profile-sub-status">در حال بارگذاری...</div>
+  <div class="sub-days" id="profile-sub-days"></div>
+  <div class="sub-dates" id="profile-sub-dates"></div>
+</div>
 <div class="stats">
   <div class="stat"><b>۱۴۲</b><span>فیلم دیده</span></div>
   <div class="stat"><b>۳۸</b><span>توی لیست</span></div>
@@ -2148,6 +2166,86 @@ window.deleteMovie = async function(id, title) {
   } catch (e) {
     alert("خطا: " + e.message);
   }
-};
+}; 
+window.loadSubscriptionStatus = async function(user) {
+  const headerBadge = document.getElementById('header-sub-badge');
+  const statusEl = document.getElementById('profile-sub-status');
+  const daysEl = document.getElementById('profile-sub-days');
+  const datesEl = document.getElementById('profile-sub-dates');
+
+  if (!user) {
+    if (headerBadge) headerBadge.innerHTML = '';
+    return;
+  }
+
+  try {
+    const { getDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const snap = await getDoc(doc(db, "users", user.uid));
+
+    if (!snap.exists()) {
+      if (headerBadge) headerBadge.innerHTML = '<span class="sub-badge inactive">🔴 غیرفعال</span>';
+      if (statusEl) statusEl.textContent = 'اشتراکی فعال نیست';
+      return;
+    }
+
+    const data = snap.data();
+    const status = data.subscriptionStatus || "inactive";
+    const plan = data.subscriptionPlan || "";
+    const endDate = data.subscriptionEnd || null;
+
+    // محاسبه روزهای باقی‌مونده
+    let daysLeft = 0;
+    if (endDate) {
+      const end = new Date(endDate);
+      const now = new Date();
+      daysLeft = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
+    }
+
+    // نمایش بَج توی هدر
+    if (headerBadge) {
+      if (status === "active" && daysLeft > 0) {
+        headerBadge.innerHTML = '<span class="sub-badge active">🟢 فعال · ' + daysLeft + ' روز</span>';
+      } else if (status === "pending") {
+        headerBadge.innerHTML = '<span class="sub-badge pending">🟡 در انتظار</span>';
+      } else {
+        headerBadge.innerHTML = '<span class="sub-badge inactive">🔴 غیرفعال</span>';
+      }
+    }
+
+    // نمایش کارت توی پروفایل
+    if (statusEl) {
+      if (status === "active" && daysLeft > 0) {
+        statusEl.textContent = '✅ اشتراک فعال';
+        statusEl.style.color = '#5eead4';
+        if (daysEl) daysEl.textContent = daysLeft + ' روز مونده';
+        if (datesEl) {
+          datesEl.innerHTML = 'پلن: ' + plan + '<br>انقضا: ' + new Date(endDate).toLocaleDateString('fa-IR');
+        }
+      } else if (status === "pending") {
+        statusEl.textContent = '⏳ در انتظار تأیید مدیر';
+        statusEl.style.color = '#fbbf24';
+        if (daysEl) daysEl.textContent = '';
+        if (datesEl) datesEl.textContent = 'درخواست شما ثبت شده. لطفاً منتظر تأیید باشید.';
+      } else {
+        statusEl.textContent = '❌ اشتراک غیرفعال';
+        statusEl.style.color = '#f87171';
+        if (daysEl) daysEl.textContent = '';
+        if (datesEl) datesEl.textContent = 'برای تماشای فیلم‌ها اشتراک تهیه کنید.';
+      }
+    }
+  } catch (e) {
+    console.error("خطا در خواندن اشتراک:", e);
+    if (statusEl) statusEl.textContent = 'خطا در بارگذاری';
+  }
+}; 
+  onAuthStateChanged(auth, (user) => {
+  if (user) {
+    updateProfileUI(user);
+    loadSubscriptionStatus(user);
+  } else {
+    const headerBadge = document.getElementById('header-sub-badge');
+    if (headerBadge) headerBadge.innerHTML = '';
+  }
+});
 </script>
 </html>
