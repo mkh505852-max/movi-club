@@ -1978,6 +1978,18 @@ window.showCustomModal = function(message, icon) {
 window.closeCustomModal = function() {
   const modal = document.getElementById('customModal');
   if (modal) modal.classList.remove('show');
+}; 
+  // ─── میان‌گیر خودکار alert ───
+window.alert = function(message) {
+  const msg = String(message);
+  const emojiMatch = msg.match(/^([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u2705\u274C\u26A0])\s*/u);
+  let icon = 'ℹ️';
+  let text = msg;
+  if (emojiMatch) {
+    icon = emojiMatch[1];
+    text = msg.slice(emojiMatch[0].length).trim();
+  }
+  showCustomModal(text, icon);
 };
   window.selectPlan = async function(plan) {
     const user = auth.currentUser;
@@ -2059,7 +2071,7 @@ window.handleLogin = async function() {
   try {
     if (isLoginMode) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      alert('✅ خوش آمدید!');
+      showCustomModal('خوش آمدید!', '✅');
       updateProfileUI(userCredential.user);
       showPage('profile');
     } else {
@@ -2070,7 +2082,7 @@ window.handleLogin = async function() {
         subscriptionPlan: null,
         subscriptionStatus: "inactive"
       });
-      alert('✅ ثبت‌نام موفق! خوش آمدید.');
+      showCustomModal('ثبت‌نام موفق! خوش آمدید', '🎬');
       updateProfileUI(userCredential.user);
       showPage('profile');
     }
@@ -2118,7 +2130,7 @@ window.saveMovie = async function() {
   const video = document.getElementById('mv-video').value.trim();
 
   if (!title) {
-    alert('❌ لطفاً نام فیلم را وارد کنید');
+    showCustomModal('لطفاً نام فیلم را وارد کنید', '⚠️');
     return;
   }
 
@@ -2135,14 +2147,14 @@ window.saveMovie = async function() {
       createdAt: new Date().toISOString()
     });
 
-    alert('✅ فیلم با موفقیت اضافه شد!');
+    showCustomModal('فیلم با موفقیت اضافه شد', '✅');
     toggleMovieForm();
     
     if (window.loadAdminMovies) loadAdminMovies();
     
   } catch (error) {
     console.error(error);
-    alert('❌ خطا در ذخیره: ' + error.message);
+    showCustomModal('خطا در ذخیره: ' + error.message, '❌');
   }
 };
 
@@ -2188,20 +2200,20 @@ window.deleteMovie = async function(id, title) {
   try {
     const { deleteDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     await deleteDoc(doc(db, "movies", id));
-    alert('🗑 فیلم حذف شد');
+    showCustomModal('فیلم حذف شد', '🗑');
     loadAdminMovies();
   } catch (error) {
-    alert('❌ خطا در حذف: ' + error.message);
+    showCustomModal('خطا در حذف: ' + error.message, '❌');
   }
 };
   window.handleLogout = async function() {
   try {
     const { signOut } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
     await signOut(auth);
-    alert("خارج شدید");
+    showCustomModal('با موفقیت خارج شدید', '👋');
     showPage("home");
   } catch (e) {
-    alert("خطا: " + e.message);
+    showCustomModal('خطا: ' + e.message, '❌');
   }
 }; 
 window.loadSubscriptionStatus = async function(user) {
