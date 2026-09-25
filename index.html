@@ -1492,7 +1492,8 @@ footer b{
       <button class="admin-tab active" data-atab="dashboard" onclick="showAdminTab('dashboard')">📊 داشبورد</button>
       <button class="admin-tab" data-atab="movies" onclick="showAdminTab('movies')">🎬 فیلم‌ها</button>
       <button class="admin-tab" data-atab="series" onclick="showAdminTab('series')">📺 سریال‌ها</button>
-      <button class="admin-tab" data-atab="users" onclick="showAdminTab('users')">👥 کاربران</button>
+      <button class="admin-tab" data-atab="users" onclick="showAdminTab('users')">👥 کاربران</button> 
+      <button class="admin-tab" data-atab="subscriptions" onclick="showAdminTab('subscriptions')">💎 اشتراک‌ها</button>
       <button class="admin-tab" data-atab="comments" onclick="showAdminTab('comments')">💬 نظرات</button>
       <button class="admin-tab" data-atab="settings" onclick="showAdminTab('settings')">⚙ تنظیمات</button>
     </div>
@@ -1711,7 +1712,19 @@ footer b{
           </div>
         </div>
       </div>
+    </div> 
+    <!-- اشتراک‌ها -->
+<div class="admin-content" id="atab-subscriptions">
+  <div class="section">
+    <div class="section-head">
+      <h2>💎 درخواست‌های اشتراک</h2>
+      <a onclick="loadPendingSubscriptions()">🔄 بروزرسانی</a>
     </div>
+    <div id="pending-subs-list" class="admin-list">
+      <div style="padding:20px; text-align:center; color:var(--muted);">در حال بارگذاری...</div>
+    </div>
+  </div>
+</div>
 
     <!-- نظرات -->
     <div class="admin-content" id="atab-comments">
@@ -1979,6 +1992,106 @@ window.closeCustomModal = function() {
   const modal = document.getElementById('customModal');
   if (modal) modal.classList.remove('show');
 }; 
+  // ============================================
+// مدیریت اشتراک‌ها در پنل ادمین
+// ============================================
+window.loadPendingSubscriptions = async function() {
+  const listEl = document.getElementById('pending-subs-list');
+  if (!listEl) return;
+
+  listEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted);">در حال بارگذاری...</div>';
+
+  try {
+    const { getDocs, collection, query, where } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const q = query(collection(db, "users"), where("subscriptionStatus", "==", "pending"));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      listEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted);">هیچ درخواستی در انتظار نیست ✅</div>';
+      return;
+    }
+
+    let html = '';
+    snapshot.forEach((docSnap) => {
+      const u = docSnap.data();
+      const uid = docSnap.id;
+      const email = u.email || 'بدون ایمیل';
+      const plan = u.subscriptionPlan || '—';
+      const reqDate = u.requestDate ? new Date(u.requestDate).toLocaleDateString('fa-IR') : '—';
+
+      html += `
+        <div class="admin-list-item">
+          <div class="admin-item-thumb user-thumb">👤</div>
+          <div class="admin-item-info">
+            <b>${email}</b>
+            <small>پلن: ${plan} · درخواست: ${reqDate}</small>
+          </div>
+          <div class="admin-item-actions">
+            <button class="admin-btn approve" onclick="approveSubscription('${uid}')">✅ تأیید</button>
+            <button class="admin-btn delete" onclick="rejectSubscription('${uid}')">❌ رد</button>
+          </div>
+        </div>
+      `;
+    });
+
+    listEl.innerHTML = html;
+  } catch (e) {
+    console.error('خطا در لود اشتراک‌ها:', e);
+    listEl.innerHTML = '<div style="padding:20px; text-align:center; color:#f87171;">خطا در بارگذاری</div>';
+  }
+};
+
+window.approveSubscription = async function(uid) {
+  if (!confirm('اشتراک این کاربر تأیید شود؟')) return;
+
+  try {
+    const { getDoc, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const snap = await getDoc(doc(db, "users", uid));
+    if (!snap.exists()) return;
+
+    const plan = snap.data().subscriptionPlan || '1month';
+
+    let days = 30;
+    if (plan === '3month') days = 90;
+    else if (plan === '6month') days = 180;
+    else if (plan === '12month') days = 365;
+
+    const now = new Date();
+    const end = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+
+    await updateDoc(doc(db, "users", uid), {
+      subscriptionStatus: "active",
+      subscriptionStart: now.toISOString(),
+      subscriptionEnd: end.toISOString(),
+      approvedAt: now.toISOString()
+    });
+
+    showCustomModal('اشتراک فعال شد ✅', '💎');
+    loadPendingSubscriptions();
+  } catch (e) {
+    console.error(e);
+    showCustomModal('خطا در تأیید: ' + e.message, '❌');
+  }
+};
+
+window.rejectSubscription = async function(uid) {
+  if (!confirm('این درخواست رد شود؟')) return;
+
+  try {
+    const { updateDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    await updateDoc(doc(db, "users", uid), {
+      subscriptionStatus: "inactive",
+      subscriptionPlan: null,
+      rejectedAt: new Date().toISOString()
+    });
+    showCustomModal('درخواست رد شد', '❌');
+    loadPendingSubscriptions();
+  } catch (e) {
+    console.error(e);
+    showCustomModal('خطا در رد: ' + e.message, '❌');
+  }
+};
+
   // ─── میان‌گیر خودکار alert ───
 window.alert = function(message) {
   const msg = String(message);
