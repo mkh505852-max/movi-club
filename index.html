@@ -2093,6 +2093,7 @@ window.handleLogin = async function() {
     else if (error.code === 'auth/email-already-in-use') errorBox.textContent = '❌ این ایمیل قبلاً ثبت شده';
     else if (error.code === 'auth/invalid-email') errorBox.textContent = '❌ ایمیل نامعتبر است';
     else if (error.code === 'auth/weak-password') errorBox.textContent = '❌ رمز عبور ضعیف است (حداقل ۶ کاراکتر)';
+    else if (error.code === 'auth/invalid-credential') errorBox.textContent = '❌ ایمیل یا رمز عبور اشتباه است';
     else errorBox.textContent = '❌ خطا: ' + error.message;
   }
 };
