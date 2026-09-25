@@ -809,7 +809,21 @@ footer b{
 .sub-card h3{font-size:13px;color:var(--turquoise-soft);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .sub-card .sub-status{font-size:15px;font-weight:bold;color:var(--text-strong);margin-bottom:8px}
 .sub-card .sub-days{font-size:20px;font-weight:bold;background:var(--grad-soft);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0}
-.sub-card .sub-dates{font-size:11px;color:var(--muted);line-height:1.8;margin-top:8px}.profile-btns .sub-card{width:100%;margin:14px 0;display:block}.profile-btns .sub-card{width:100%;margin:14px 0;display:block}
+.sub-card .sub-dates{font-size:11px;color:var(--muted);line-height:1.8;margin-top:8px}.profile-btns .sub-card{width:100%;margin:14px 0;display:block}.profile-btns .sub-card{width:100%;margin:14px 0;display:block} 
+  /* ============ مودال سفارشی ============ */
+#customModal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+#customModal.show{display:flex}
+#customModal .modal-box{background:linear-gradient(135deg,#0f172a 0%,#1a2438 100%);border:1px solid rgba(45,212,191,.45);border-radius:22px;padding:30px 24px 24px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 70px rgba(20,184,166,.35);position:relative;overflow:hidden;animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+#customModal .modal-box::before{content:"";position:absolute;top:-60px;left:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(45,212,191,.35),transparent 70%);border-radius:50%;pointer-events:none}
+#customModal .modal-box::after{content:"";position:absolute;bottom:-70px;right:-70px;width:200px;height:200px;background:radial-gradient(circle,rgba(167,139,250,.28),transparent 70%);border-radius:50%;pointer-events:none}
+#customModal .modal-logo{font-size:52px;margin-bottom:10px;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(45,212,191,.5))}
+#customModal .modal-title{background:linear-gradient(135deg,#2dd4bf,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:22px;margin-bottom:18px;font-weight:bold;letter-spacing:.5px;position:relative;z-index:1}
+#customModal .modal-message-box{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.28);border-radius:16px;padding:20px 16px;margin-bottom:20px;position:relative;z-index:1}
+#customModal .modal-icon{font-size:36px;margin-bottom:10px;display:block}
+#customModal .modal-text{color:#eef4fb;font-size:16px;font-weight:bold;margin:0;line-height:1.6}
+#customModal .modal-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#7c3aed);color:#fff;font-size:15px;font-weight:bold;cursor:pointer;font-family:Tahoma,sans-serif;box-shadow:0 6px 20px rgba(124,58,237,.45);transition:.2s;position:relative;z-index:1}
+#customModal .modal-btn:hover{transform:translateY(-2px)}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -1784,8 +1798,18 @@ footer b{
   کلوب فیلم‌های عجیب<br>
   درباره کلوپ | قوانین | عضویت<br><br>
   © ۲۰۲۶ موی کلوپ — تمامی حقوق محفوظ است
-</footer>
-
+</footer> 
+  <div id="customModal">
+  <div class="modal-box">
+    <div class="modal-logo">👁</div>
+    <div class="modal-title">موی کلوپ</div>
+    <div class="modal-message-box">
+      <span class="modal-icon" id="customModalIcon">✅</span>
+      <p class="modal-text" id="customModalText">خوش آمدید!</p>
+    </div>
+    <button class="modal-btn" onclick="closeCustomModal()">تأیید</button>
+  </div>
+</div>
 <div class="bottom-nav">
   <div class="active" data-page="home" onclick="showPage('home')"><span>🏠</span>خانه</div>
   <div data-page="movies" onclick="showPage('movies')"><span>🎬</span>فیلم‌ها</div>
@@ -1941,11 +1965,24 @@ function changePassword() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+window.showCustomModal = function(message, icon) {
+  const modal = document.getElementById('customModal');
+  const text = document.getElementById('customModalText');
+  const iconEl = document.getElementById('customModalIcon');
+  if (!modal || !text) return;
+  text.textContent = message;
+  if (iconEl) iconEl.textContent = icon || '✅';
+  modal.classList.add('show');
+};
 
+window.closeCustomModal = function() {
+  const modal = document.getElementById('customModal');
+  if (modal) modal.classList.remove('show');
+};
   window.selectPlan = async function(plan) {
     const user = auth.currentUser;
     if (!user) {
-      alert("لطفا ابتدا وارد حساب کاربری خود شوید.");
+      showCustomModal('ابتدا وارد حساب کاربری شوید', '⚠️');
       showPage('profile');
       return;
     }
@@ -1955,10 +1992,10 @@ function changePassword() {
         subscriptionStatus: "pending",
         requestDate: new Date().toISOString()
       });
-      alert('پلن ' + plan + ' با موفقیت ثبت شد. در حال انتقال به درگاه پرداخت...');
+      showCustomModal('پلن ' + plan + ' ثبت شد، در حال انتقال...', '💎');
     } catch (error) {
       console.error("خطا در ذخیره:", error);
-      alert("مشکلی پیش آمد. لطفا دوباره تلاش کنید.");
+      showCustomModal('مشکلی پیش آمد، دوباره تلاش کنید', '❌');
     }
   };
 
