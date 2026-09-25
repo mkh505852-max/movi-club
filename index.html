@@ -2053,7 +2053,7 @@ window.updateProfileUI = function(user) {
     const nameEl = document.querySelector('.profile-head h2');
     const userEl = document.querySelector('.profile-head .username');
     if (nameEl) nameEl.textContent = user.email.split('@')[0];
-    if (userEl) userEl.textContent = '@' + user.email.split('@')[0];
+    if (userEl) userEl.textContent = '\u200E@' + user.email.split('@')[0] + '\u200E';
   }
 };
  // ============================================
