@@ -1574,7 +1574,21 @@ footer b{
   <input type="text" id="mv-poster" placeholder="لینک پوستر (https://...)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
   
   <input type="text" id="mv-badge" placeholder="برچسب (مثلاً کالت، TOP، جدید)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; text-align:left;">
-  
+  <select id="mv-genre" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:8px; font-family:Tahoma,sans-serif;">
+    <option value="">— انتخاب ژانر —</option>
+    <option value="اکشن">🎬 اکشن</option>
+    <option value="کمدی">😂 کمدی</option>
+    <option value="درام">🎭 درام</option>
+    <option value="علمی‌تخیلی">🚀 علمی‌تخیلی</option>
+    <option value="ترسناک">👻 ترسناک</option>
+    <option value="هیجان‌انگیز">🔥 هیجان‌انگیز</option>
+    <option value="عاشقانه">❤️ عاشقانه</option>
+    <option value="انیمیشن">🎨 انیمیشن</option>
+    <option value="ماجراجویی">🗺️ ماجراجویی</option>
+    <option value="جنایی">🕵️ جنایی</option>
+    <option value="معمایی">🔍 معمایی</option>
+    <option value="فانتزی">✨ فانتزی</option>
+  </select>
   <input type="text" id="mv-video" placeholder="لینک ویدیو (اختیاری)" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text-strong); font-size:13px; margin-bottom:12px; text-align:left;">
   
   <div style="display:flex; gap:8px;">
@@ -2242,7 +2256,7 @@ window.toggleMovieForm = function() {
     document.getElementById('mv-title').focus();
   } else {
     form.style.display = 'none';
-    ['mv-title','mv-year','mv-rating','mv-poster','mv-badge','mv-video'].forEach(id => {
+    ['mv-title','mv-year','mv-rating','mv-poster','mv-badge','mv-video','mv-genre'].forEach(id => {
       document.getElementById(id).value = '';
     });
   }
@@ -2253,7 +2267,8 @@ window.saveMovie = async function() {
   const year = document.getElementById('mv-year').value.trim();
   const rating = document.getElementById('mv-rating').value.trim();
   const poster = document.getElementById('mv-poster').value.trim();
-  const badge = document.getElementById('mv-badge').value.trim();
+  const badge = document.getElementById('mv-badge').value.trim(); 
+  const genre = document.getElementById('mv-genre').value.trim();
   const video = document.getElementById('mv-video').value.trim();
 
   if (!title) {
@@ -2270,7 +2285,8 @@ window.saveMovie = async function() {
       rating: rating || '—',
       poster: poster || '',
       badge: badge || 'جدید',
-      video: video || '',
+      video: video || '', 
+      genre: genre || 'نامشخص',
       createdAt: new Date().toISOString()
     });
 
@@ -2344,14 +2360,14 @@ window.loadMoviesToHome = async function() {
       const rating = m.rating || '—';
       const poster = m.poster || 'https://picsum.photos/seed/' + encodeURIComponent(title) + '/300/450';
       const badge = m.badge || 'جدید';
-
+ const genre = m.genre || '';
       html += `
         <div class="card" onclick="showPage('watch')">
           <span class="card-badge">${badge}</span>
           <img src="${poster}" data-title="${title}" data-year="${year}" onerror="posterFallback(this)" alt="${title}">
           <div class="card-info">
             <b>${title}</b>
-            <small>⭐ ${rating}</small>
+          <small>⭐ ${rating}${genre ? ' · ' + genre : ''}</small>
           </div>
         </div>
       `;
