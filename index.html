@@ -886,15 +886,7 @@ footer b{
   </div>
 </div> 
   <!-- ============ فیلم‌های داینامیک از Firestore ============ -->
-  <div class="section" id="dynamic-movies-section">
-    <div class="section-head">
-      <h2>🎬 جدیدترین فیلم‌ها</h2>
-      <a onclick="loadMoviesToHome()">🔄 بروزرسانی</a>
-    </div>
-    <div class="row" id="home-movies-container">
-      <div style="padding:20px; text-align:center; color:var(--muted); width:100%;">در حال بارگذاری...</div>
-    </div>
-  </div>
+  <div id="dynamic-movies-section"></div>
 
   <div class="section"> 
     
@@ -2351,7 +2343,7 @@ window.loadAdminMovies = async function() {
 // نمایش فیلم‌های Firestore توی صفحه اصلی
 // ============================================
 window.loadMoviesToHome = async function() {
-  const container = document.getElementById('home-movies-container');
+  const container = document.getElementById('dynamic-movies-section');
   if (!container) return;
 
   try {
@@ -2359,27 +2351,66 @@ window.loadMoviesToHome = async function() {
     const snapshot = await getDocs(collection(db, "movies"));
 
     if (snapshot.empty) {
-      container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted); width:100%;">هنوز فیلمی اضافه نشده</div>';
+      container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted);">هنوز فیلمی اضافه نشده</div>';
       return;
     }
 
-    let html = '';
+    const byGenre = {};
+    const order = [];
+
     snapshot.forEach((docSnap) => {
       const m = docSnap.data();
-      const title = m.title || 'بدون نام';
-      const year = m.year || '—';
-      const rating = m.rating || '—';
-      const poster = m.poster || 'https://picsum.photos/seed/' + encodeURIComponent(title) + '/300/450';
-      const badge = m.badge || 'جدید';
- const genre = m.genre || '';
+      const genre = m.genre || 'نامشخص';
+      if (!byGenre[genre]) {
+        byGenre[genre] = [];
+        order.push(genre);
+      }
+      byGenre[genre].push(m);
+    });
+
+    const genreEmoji = {
+      'اکشن': '🎬',
+      'کمدی': '😂',
+      'درام': '🎭',
+      'علمی‌تخیلی': '🚀',
+      'ترسناک': '👻',
+      'هیجان‌انگیز': '🔥',
+      'عاشقانه': '❤️',
+      'انیمیشن': '🎨',
+      'ماجراجویی': '🗺️',
+      'جنایی': '🕵️',
+      'معمایی': '🔍',
+      'فانتزی': '✨'
+    };
+
+    let html = '';
+    order.forEach((genre) => {
+      const movies = byGenre[genre];
+      const emoji = genreEmoji[genre] || '🎬';
+
       html += `
-        <div class="card" onclick="showPage('watch')">
-          <span class="card-badge">${badge}</span>
-          <img src="${poster}" data-title="${title}" data-year="${year}" onerror="posterFallback(this)" alt="${title}">
-          <div class="card-info">
-            <b>${title}</b>
-          <small>⭐ ${rating}</small>
-              ${genre ? `<span class="genre-chip">${genre}</span>` : ''}
+        <div class="section">
+          <div class="section-head">
+            <h2>${emoji} ${genre}</h2>
+            <a>همه ←</a>
+          </div>
+          <div class="row">
+            ${movies.map(m => {
+              const title = m.title || 'بدون نام';
+              const rating = m.rating || '—';
+              const poster = m.poster || 'https://picsum.photos/seed/' + encodeURIComponent(title) + '/300/450';
+              const badge = m.badge || 'جدید';
+              return `
+                <div class="card" onclick="showPage('watch')">
+                  <span class="card-badge">${badge}</span>
+                  <img src="${poster}" data-title="${title}" onerror="posterFallback(this)" alt="${title}">
+                  <div class="card-info">
+                    <b>${title}</b>
+                    <small>⭐ ${rating}</small>
+                  </div>
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
       `;
@@ -2388,9 +2419,11 @@ window.loadMoviesToHome = async function() {
     container.innerHTML = html;
   } catch (e) {
     console.error('خطا در لود فیلم‌ها:', e);
-    container.innerHTML = '<div style="padding:20px; text-align:center; color:#f87171; width:100%;">خطا در بارگذاری</div>';
+    container.innerHTML = '<div style="padding:20px; text-align:center; color:#f87171;">خطا در بارگذاری</div>';
   }
 };
+
+  
 
 window.deleteMovie = async function(id, title) { 
   
