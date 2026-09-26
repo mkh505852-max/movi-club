@@ -260,7 +260,18 @@ nav.top-nav span.admin-link{
 .card-info small{
   color:var(--turquoise);
   font-size:11px;font-weight:bold;
-}
+} 
+  .genre-chip{
+  display:inline-block;
+  background:rgba(167,139,250,.15);
+  color:var(--purple-soft);
+  border:1px solid rgba(167,139,250,.4);
+  padding:2px 8px;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:bold;
+  margin-top:4px;
+  }
 .card-badge{
   position:absolute;top:6px;right:6px;
   background:rgba(20,184,166,.85);
@@ -2367,7 +2378,8 @@ window.loadMoviesToHome = async function() {
           <img src="${poster}" data-title="${title}" data-year="${year}" onerror="posterFallback(this)" alt="${title}">
           <div class="card-info">
             <b>${title}</b>
-          <small>⭐ ${rating}${genre ? ' · ' + genre : ''}</small>
+          <small>⭐ ${rating}</small>
+              ${genre ? `<span class="genre-chip">${genre}</span>` : ''}
           </div>
         </div>
       `;
