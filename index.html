@@ -832,9 +832,187 @@ footer b{
 #customModal .modal-message-box{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.28);border-radius:16px;padding:20px 16px;margin-bottom:20px;position:relative;z-index:1}
 #customModal .modal-icon{font-size:36px;margin-bottom:10px;display:block}
 #customModal .modal-text{color:#eef4fb;font-size:16px;font-weight:bold;margin:0;line-height:1.6}
-#customModal .modal-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#7c3aed);color:#fff;font-size:15px;font-weight:bold;cursor:pointer;font-family:Tahoma,sans-serif;box-shadow:0 6px 20px rgba(124,58,237,.45);transition:.2s;position:relative;z-index:1}
+#customModal .modal-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#7c3aed);color:#fff;font-size:15px;font-weight:bold;cursor:pointer;font-family:Tahoma,sans-serif;box-shadow:0 6px 20px rgba(124,58,237,.45);transition:.2s;position:relative;z-index:1} 
+  
 #customModal .modal-btn:hover{transform:translateY(-2px)}
-@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}} 
+  /* ============ ارتقای گرافیک سینمایی ============ */
+
+/* بدنه - بافت سینمایی */
+body{
+  background:
+    radial-gradient(ellipse at top, rgba(45,212,191,.06), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(124,58,237,.08), transparent 50%),
+    linear-gradient(180deg, #080e1a 0%, #0b1220 50%, #080e1a 100%);
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity:.025;
+  pointer-events:none;
+  z-index:1;
+  mix-blend-mode:overlay;
+}
+
+/* هدر - شیشه‌ای تیره‌تر */
+header{
+  background:rgba(8,14,26,.82);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  box-shadow:0 1px 0 rgba(255,255,255,.03), 0 4px 24px rgba(0,0,0,.5);
+}
+
+/* لوگو - درخشش ملایم */
+.logo{
+  text-shadow:0 0 24px rgba(45,212,191,.3);
+  letter-spacing:.3px;
+}
+
+/* کارت‌ها - عمق و سایه لایه‌ای */
+.card{
+  background:linear-gradient(180deg, #16203380, #0f1828);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.4),
+    0 4px 12px rgba(0,0,0,.35),
+    0 12px 32px rgba(0,0,0,.25);
+  transition:transform .4s cubic-bezier(.2,.9,.3,1.2), box-shadow .4s ease, border-color .3s ease;
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-6px) scale(1.02);
+  border-color:rgba(45,212,191,.35);
+  box-shadow:
+    0 4px 8px rgba(0,0,0,.5),
+    0 12px 24px rgba(0,0,0,.45),
+    0 24px 60px rgba(20,184,166,.15),
+    0 0 0 1px rgba(45,212,191,.2);
+}
+
+/* روی تصویر کارت - گرادیان سینمایی */
+.card::after{
+  content:"";
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:60%;
+  background:linear-gradient(to top, rgba(11,18,32,.95) 0%, rgba(11,18,32,.5) 40%, transparent 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.card img{
+  filter:contrast(1.05) saturate(.95) brightness(.9);
+  transition:filter .5s ease, transform .6s ease;
+}
+.card:hover img{
+  filter:contrast(1.1) saturate(1.05) brightness(1);
+  transform:scale(1.05);
+}
+.card-info{
+  position:relative;
+  z-index:2;
+}
+
+/* بج کارت - شیک‌تر */
+.card-badge{
+  background:rgba(11,18,32,.85);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  color:#5eead4;
+  font-size:9.5px;
+  letter-spacing:.3px;
+}
+
+/* هیرو - سینمایی */
+.hero{
+  background:
+    linear-gradient(135deg, rgba(20,184,166,.18), rgba(76,29,149,.28) 60%, rgba(11,18,32,.9)),
+    linear-gradient(180deg, #0f172a, #0b1220);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.05) inset,
+    0 24px 60px rgba(0,0,0,.5),
+    0 8px 24px rgba(20,184,166,.08);
+}
+
+/* بخش‌ها - تیتر شیک‌تر */
+.section-head h2{
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:.2px;
+  text-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.section-head h2::before{
+  width:3px;
+  height:14px;
+  border-radius:2px;
+  box-shadow:0 0 12px rgba(45,212,191,.6);
+}
+
+/* دکمه‌های پلن - باکلاس‌تر */
+.btn-play{
+  background:linear-gradient(135deg, #14b8a6 0%, #7c3aed 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.15) inset,
+    0 8px 24px rgba(20,184,166,.3),
+    0 2px 6px rgba(0,0,0,.3);
+  transition:.3s cubic-bezier(.2,.9,.3,1.2);
+}
+.btn-play:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.2) inset,
+    0 12px 32px rgba(20,184,166,.45),
+    0 4px 12px rgba(0,0,0,.4);
+}
+.btn-play:active{
+  transform:translateY(0);
+}
+
+/* منوی ناوبری - خط درخشان */
+nav.top-nav span.active{
+  border-bottom:2px solid var(--turquoise);
+  box-shadow:0 4px 12px -4px rgba(45,212,191,.6);
+}
+
+/* پنل ادمین - عمق بیشتر */
+.admin-stat{
+  background:linear-gradient(180deg, #16203380, #0f1828);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+  transition:.3s;
+}
+.admin-stat:hover{
+  transform:translateY(-3px);
+  border-color:rgba(45,212,191,.35);
+  box-shadow:0 8px 24px rgba(0,0,0,.4), 0 0 0 1px rgba(45,212,191,.15);
+}
+
+/* منوی تنظیمات */
+.menu-item{
+  background:linear-gradient(180deg, #141d31, #0f1828);
+  border:1px solid rgba(255,255,255,.05);
+  transition:.25s;
+}
+.menu-item:hover{
+  border-color:rgba(45,212,191,.3);
+  background:linear-gradient(180deg, #1a2438, #141d31);
+  transform:translateX(-4px);
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+
+/* حالت کلی - انیمیشن نرم */
+*{
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* اسکرول‌بار - نامرئی‌تر */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:rgba(45,212,191,.2);border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:rgba(45,212,191,.4)}
 </style>
 </head>
 <body>
