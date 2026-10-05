@@ -2706,7 +2706,7 @@ window.loadMoviesToHome = async function() {
         byGenre[genre] = [];
         order.push(genre);
       }
-      byGenre[genre].push(m);
+      byGenre[genre].push({ id: docSnap.id, ...m });
     });
 
     const genreEmoji = {
@@ -2742,7 +2742,7 @@ window.loadMoviesToHome = async function() {
               const poster = m.poster || 'https://picsum.photos/seed/' + encodeURIComponent(title) + '/300/450';
               const badge = m.badge || 'جدید';
               return `
-                <div class="card" onclick="showPage('watch')">
+                <div class="card" onclick="openMovie('${m.id}')">
                   <span class="card-badge">${badge}</span>
                   <img src="${poster}" data-title="${title}" onerror="posterFallback(this)" alt="${title}">
                   <div class="card-info">
@@ -2871,5 +2871,43 @@ loadMoviesToHome();
     if (headerBadge) headerBadge.innerHTML = '';
   }
 });
+  window.openMovie = async function(movieId) {
+  try {
+    const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const docSnap = await getDoc(doc(db, "movies", movieId));
+    
+    if (!docSnap.exists()) {
+      alert("فیلم پیدا نشد");
+      return;
+    }
+    
+    const m = docSnap.data();
+    
+    const titleEl = document.getElementById("watch-title");
+    if (titleEl) titleEl.textContent = m.title || "بدون نام";
+    
+    const metaEl = document.getElementById("watch-meta");
+    if (metaEl) {
+      const year = m.year || "—";
+      const director = m.director || "—";
+      metaEl.textContent = year + " | " + director;
+    }
+    
+    const genresEl = document.getElementById("watch-genres");
+    if (genresEl) {
+      const genre = m.genre || "";
+      genresEl.innerHTML = genre ? '<span class="hero-tag">' + genre + '</span>' : '';
+    }
+    
+    const epSection = document.getElementById("watch-episodes-section");
+    if (epSection) epSection.style.display = "none";
+    
+    showPage("watch");
+    
+  } catch (e) {
+    console.error("خطا در باز کردن فیلم:", e);
+    alert("خطا در باز کردن فیلم");
+  }
+};
 </script>
 </html>
