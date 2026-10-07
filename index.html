@@ -1231,7 +1231,7 @@ nav.top-nav span.active{
 </div> 
   <!-- ============ فیلم‌های داینامیک از Firestore ============ -->
   <div id="dynamic-movies-section"></div>
-
+<div id="dynamic-series-section"></div>
   <div class="section"> 
     
     <div class="section-head"><h2>🚀 شاهکارهای علمی‌تخیلی</h2><a onclick="showPage('movies')">همه ←</a></div>
@@ -2001,84 +2001,24 @@ nav.top-nav span.active{
           <h2>📺 لیست سریال‌ها</h2>
           <a onclick="alert('➕ فرم افزودن سریال (به زودی)')">➕ افزودن</a>
         </div>
-        <div class="admin-list">
-          <div class="admin-list-item">
-            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#0f766e,#4c1d95)">📺</div>
-            <div class="admin-item-info">
-              <b>Breaking Bad</b>
-              <small>۵ فصل · ۶۲ قسمت · ⭐ ۹.۵</small>
-            </div>
-            <div class="admin-item-actions">
-              <button class="admin-btn" onclick="alert('✏ ویرایش Breaking Bad')">✏</button>
-              <button class="admin-btn delete" onclick="delItem('Breaking Bad')">🗑</button>
-            </div>
-          </div>
-          <div class="admin-list-item">
-            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#0e7490,#6d28d9)">📺</div>
-            <div class="admin-item-info">
-              <b>La Casa de Papel</b>
-              <small>۵ پارت · ۴۱ قسمت · ⭐ ۸.۸</small>
-            </div>
-            <div class="admin-item-actions">
-              <button class="admin-btn" onclick="alert('✏ ویرایش La Casa de Papel')">✏</button>
-              <button class="admin-btn delete" onclick="delItem('La Casa de Papel')">🗑</button>
-            </div>
-          </div>
-          <div class="admin-list-item">
-            <div class="admin-item-thumb" style="background:linear-gradient(135deg,#155e75,#7c3aed)">📺</div>
-            <div class="admin-item-info">
-              <b>Stranger Things</b>
-              <small>۴ فصل · ۳۴ قسمت · ⭐ ۸.۷</small>
-            </div>
-            <div class="admin-item-actions">
-              <button class="admin-btn" onclick="alert('✏ ویرایش Stranger Things')">✏</button>
-              <button class="admin-btn delete" onclick="delItem('Stranger Things')">🗑</button>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div class="admin-list" id="admin-series-list">
+       <div  style="padding:20px; text-align:center; color:var(--muted);">⏳ در حال بارگذاری...</div>
     </div>
+  </div>
+    </div>
+      
+      
+    
 
     <!-- کاربران -->
     <div class="admin-content" id="atab-users">
       <div class="section">
         <div class="section-head">
           <h2>👥 لیست کاربران</h2>
-          <a onclick="alert('➕ فرم افزودن کاربر (به زودی)')">➕ افزودن</a>
+          <a onclick="loadAdminUsers()">🔄 بروزرسانی</a>
         </div>
-        <div class="admin-list">
-          <div class="admin-list-item">
-            <div class="admin-item-thumb user-thumb">👤</div>
-            <div class="admin-item-info">
-              <b>سارا محمدی</b>
-              <small>@sara_m · ۱۴۲ فیلم دیده</small>
-            </div>
-            <div class="admin-item-actions">
-              <button class="admin-btn" onclick="alert('✏ ویرایش سارا')">✏</button>
-              <button class="admin-btn delete" onclick="delItem('سارا محمدی')">🗑</button>
-            </div>
-          </div>
-          <div class="admin-list-item">
-            <div class="admin-item-thumb user-thumb">👤</div>
-            <div class="admin-item-info">
-              <b>امیر رضایی</b>
-              <small>@amir_r · ۸۹ فیلم دیده</small>
-            </div>
-            <div class="admin-item-actions">
-              <button class="admin-btn" onclick="alert('✏ ویرایش امیر')">✏</button>
-              <button class="admin-btn delete" onclick="delItem('امیر رضایی')">🗑</button>
-            </div>
-          </div>
-          <div class="admin-list-item">
-            <div class="admin-item-thumb user-thumb admin-user">👑</div>
-            <div class="admin-item-info">
-              <b>مدیر کل</b>
-              <small>@admin · دسترسی کامل</small>
-            </div>
-            <div class="admin-item-actions">
-              <button class="admin-btn" onclick="alert('✏ ویرایش مدیر')">✏</button>
-            </div>
-          </div>
+        <div class="admin-list" id="admin-users-list">
+          <div style="padding:20px; text-align:center; color:var(--muted);">⏳ در حال بارگذاری...</div>
         </div>
       </div>
     </div> 
@@ -2298,6 +2238,8 @@ function adminLogout() {
 }
 
 function showAdminTab(name) {
+  if (name === 'users') loadAdminUsers();
+if (name === 'subscriptions') loadPendingSubscriptions();
   document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
   document.getElementById('atab-' + name).classList.add('active');
 
@@ -2409,7 +2351,43 @@ window.loadPendingSubscriptions = async function() {
     listEl.innerHTML = '<div style="padding:20px; text-align:center; color:#f87171;">خطا در بارگذاری</div>';
   }
 };
-
+window.loadAdminUsers = async function() {
+  const listEl = document.getElementById('admin-users-list');
+  if (!listEl) return;
+  listEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted);">⏳ در حال بارگذاری...</div>';
+  try {
+    const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const snapshot = await getDocs(collection(db, "users"));
+    if (snapshot.empty) {
+      listEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted);">👥 هنوز کاربری ثبت نشده</div>';
+      return;
+    }
+    let html = '';
+    snapshot.forEach((docSnap) => {
+      const u = docSnap.data();
+      const name = u.name || u.displayName || u.email || 'کاربر';
+      const email = u.email || 'بدون ایمیل';
+      const status = u.subscriptionStatus || '';
+      let badge = '';
+      let badgeColor = '';
+      if (status === 'active') {
+        badge = '💎 فعال';
+        badgeColor = '#10b981';
+      } else if (status === 'pending') {
+        badge = '⏳ در انتظار';
+        badgeColor = '#fbbf24';
+      } else {
+        badge = '❌ غیرفعال';
+        badgeColor = '#f87171';
+      }
+      html += '<div class="admin-list-item"><div class="admin-item-thumb user-thumb">👤</div><div class="admin-item-info"><b>' + name + '</b><small>' + email + '</small></div><div class="admin-item-actions"><span style="color:' + badgeColor + '; font-size:11px; font-weight:bold; padding:6px 10px; border-radius:6px; background:' + badgeColor + '20;">' + badge + '</span></div></div>';
+    });
+    listEl.innerHTML = html;
+  } catch (e) {
+    console.error("خطا در خواندن کاربران:", e);
+    listEl.innerHTML = '<div style="padding:20px; text-align:center; color:#f87171;">❌ خطا در خواندن کاربران</div>';
+  }
+};
 window.approveSubscription = async function(uid) {
   if (!confirm('اشتراک این کاربر تأیید شود؟')) return;
 
@@ -2763,7 +2741,32 @@ window.loadMoviesToHome = async function() {
     container.innerHTML = '<div style="padding:20px; text-align:center; color:#f87171;">خطا در بارگذاری</div>';
   }
 };
-
+window.loadSeriesToHome = async function() {
+  const container = document.getElementById('dynamic-series-section');
+  if (!container) return;
+  try {
+    const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const snapshot = await getDocs(collection(db, "series"));
+    if (snapshot.empty) {
+      container.innerHTML = '';
+      return;
+    }
+    let cards = '';
+    snapshot.forEach((docSnap) => {
+      const s = docSnap.data();
+      const title = s.title || 'بدون نام';
+      const rating = s.rating || '—';
+      const poster = s.poster || 'https://picsum.photos/seed/series' + Math.random() + '/300/450';
+      const badge = s.badge || 'سریال';
+      cards += '<div class="card" onclick="openMovie(\'' + docSnap.id + '\')"><span class="card-badge">' + badge + '</span><img src="' + poster + '" data-title="' + title + '" onerror="posterFallback(this)" alt="' + title + '"><div class="card-info"><b>' + title + '</b><small>⭐ ' + rating + '</small></div></div>';
+    });
+    const html = '<div class="section"><div class="section-head"><h2>📺 سریال‌های ویژه</h2><a>همه ←</a></div><div class="row">' + cards + '</div></div>';
+    container.innerHTML = html;
+  } catch (e) {
+    console.error("خطا در لود سریال‌ها:", e);
+    container.innerHTML = '';
+  }
+};
   
 
 window.deleteMovie = async function(id, title) { 
@@ -2861,7 +2864,7 @@ window.loadSubscriptionStatus = async function(user) {
 }; 
   // لود فیلم‌های صفحه اصلی (مستقل از لاگین)
 loadMoviesToHome();
-
+loadSeriesToHome();
   onAuthStateChanged(auth, (user) => {
   if (user) {
     updateProfileUI(user);
@@ -2871,8 +2874,43 @@ loadMoviesToHome();
     if (headerBadge) headerBadge.innerHTML = '';
   }
 });
+  window.checkSubscription = async function() {
+  try {
+    const user = auth.currentUser;
+    if (!user) return { ok: false, reason: "no_user" };
+    const { getDoc, doc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (!snap.exists()) return { ok: false, reason: "no_sub" };
+    const data = snap.data();
+    const status = data.subscriptionStatus || "";
+    const endDate = data.subscriptionEnd || null;
+    if (status !== "active") return { ok: false, reason: "no_sub" };
+    if (!endDate) return { ok: false, reason: "no_sub" };
+    const daysLeft = Math.max(0, Math.ceil((new Date(endDate) - new Date()) / 86400000));
+    if (daysLeft <= 0) return { ok: false, reason: "expired" };
+    return { ok: true, daysLeft };
+  } catch (e) {
+    console.error("خطا در چک اشتراک:", e);
+    return { ok: false, reason: "error" };
+  }
+};
   window.openMovie = async function(movieId) {
   try {
+    const sub = await window.checkSubscription();
+if (!sub.ok) {
+  if (sub.reason === "no_user") {
+    showCustomModal("برای تماشای فیلم، اول وارد حساب شو", "🔐");
+  } else if (sub.reason === "no_sub") {
+    showCustomModal("برای تماشای فیلم، اشتراک ویژه بخر", "💎");
+    showPage("subscription");
+  } else if (sub.reason === "expired") {
+    showCustomModal("اشتراکت منقضی شده. لطفاً تمدید کن", "⏰");
+    showPage("subscription");
+  } else {
+    showCustomModal("خطا در بررسی اشتراک", "❌");
+  }
+  return;
+}
     const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     const docSnap = await getDoc(doc(db, "movies", movieId));
     
